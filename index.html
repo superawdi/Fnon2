@@ -442,7 +442,7 @@
       }
 
       /* ── Theme toggle ── */
-      .theme-toggle {
+      .theme-toggle, .rtl-toggle {
         margin-left: auto;
         background: none;
         border: 2px solid #e2e8f0;
@@ -459,7 +459,7 @@
         line-height: 1;
         padding: 0;
       }
-      .theme-toggle:hover {
+      .theme-toggle:hover, .rtl-toggle:hover {
         border-color: #029eff;
       }
 
@@ -617,10 +617,10 @@
       [data-theme="dark"] .sandbox-actions button.dan:hover {
         background: #b91c1c;
       }
-      [data-theme="dark"] .theme-toggle {
+      [data-theme="dark"] .theme-toggle, [data-theme="dark"] .rtl-toggle {
         border-color: #475569;
       }
-      [data-theme="dark"] .theme-toggle:hover {
+      [data-theme="dark"] .theme-toggle:hover, [data-theme="dark"] .rtl-toggle:hover {
         border-color: #38bdf8;
       }
     </style>
@@ -641,6 +641,14 @@
             title="Toggle dark/light mode"
           >
             🌙
+          </button>
+          <button
+            id="rtl-toggle"
+            class="rtl-toggle"
+            onclick="toggleRtl()"
+            title="Toggle RTL/LTR direction"
+          >
+            →
           </button>
         </h1>
         <p class="sub">
@@ -3854,6 +3862,29 @@
         applyTheme(next);
       }
       applyTheme(getPreferredTheme());
+
+      // ── RTL/LTR direction toggle ──
+      function syncFnonDir(dir) {
+        if (typeof Fnon !== "undefined") {
+          Fnon.Init({ dir });
+        }
+      }
+      function toggleRtl() {
+        const next = document.documentElement.dir === "rtl" ? "ltr" : "rtl";
+        document.documentElement.dir = next;
+        document.getElementById("rtl-toggle").textContent =
+          next === "rtl" ? "←" : "→";
+        localStorage.setItem("fnon-demo-dir", next);
+        syncFnonDir(next);
+      }
+      (function initRtl() {
+        const saved = localStorage.getItem("fnon-demo-dir");
+        const dir = saved || "ltr";
+        document.documentElement.dir = dir;
+        document.getElementById("rtl-toggle").textContent =
+          dir === "rtl" ? "←" : "→";
+        if (dir === "rtl") syncFnonDir("rtl");
+      })();
     </script>
   </body>
 </html>

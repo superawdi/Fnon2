@@ -16,6 +16,8 @@ No dependencies. 42 KB minified (12 KB gzip). Works in all modern browsers.
 
 ---
 
+> ### [Live Demo](https://superawdi.github.io/Fnon2/)
+
 ## Table of Contents
 
 - [Installation](#installation)
@@ -104,7 +106,7 @@ Copy `fnon.min.js` and `fnon.min.css` to your project.
   ]);
 
   // Set global defaults
-  Fnon.Init({ isDark: true, fontFamily: 'Arial, sans-serif' });
+  Fnon.Init({ isDark: true, dir: 'rtl', fontFamily: 'Arial, sans-serif' });
 </script>
 ```
 
@@ -351,6 +353,7 @@ All options accepted by `createModal()` (the core modal builder used by Alert, A
 | `delButtons` | `boolean` | `false` | Remove all default buttons |
 | `isDark` | `boolean \| (() => boolean)` | — | Enable dark mode |
 | `darkBgColor` | `string` | `'#1a202c'` | Dark mode background color |
+| `dir` | `'ltr' \| 'rtl'` | `'ltr'` | Text direction |
 
 ### Button Definition
 
@@ -508,6 +511,7 @@ Fnon.Hint.Danger('Connection lost.', { position: 'center-center', timeOut: 0 });
 | `progressColor` | `string` | — | Progress bar color |
 | `isDark` | `boolean \| (() => boolean)` | — | Dark mode |
 | `darkBgColor` | `string` | — | Dark background |
+| `dir` | `'ltr' \| 'rtl'` | `'ltr'` | Text direction |
 
 ### Hint Themes
 
@@ -618,6 +622,7 @@ Fnon.Box.Remove('#my-div');
 | `svgSize` | `{ w, h }` | — | — | SVG dimensions (Box only) |
 | `isDark` | `boolean \| (() => boolean)` | — | — | Dark mode |
 | `darkBgColor` | `string` | — | — | Dark background |
+| `dir` | `'ltr' \| 'rtl'` | — | — | Text direction |
 
 ### Available Spinners
 
@@ -684,6 +689,7 @@ The Promise resolves `null` if the user closes the modal without selecting (X bu
 | `title` | `FnonContent` | — | Modal title |
 | `isDark` | `boolean \| (() => boolean)` | — | Dark mode |
 | `darkBgColor` | `string` | — | Dark background |
+| `dir` | `'ltr' \| 'rtl'` | `'ltr'` | Text direction |
 
 ### Return Value
 
@@ -811,6 +817,33 @@ Fnon.Init({ isDark: () => localStorage.getItem('theme') === 'dark' });
 | Breaking | Excluded from dark mode (theme-driven) |
 
 **Important:** Only wrapper backgrounds are changed — user content inside modals is not force-colored.
+
+---
+
+## RTL Support
+
+Every subsystem supports right-to-left text direction via the `dir` option. Set it globally via `Fnon.Init()` or per-instance.
+
+```ts
+// Globally via Init()
+Fnon.Init({ dir: 'rtl' });
+
+// Per-instance
+Fnon.Alert.Primary('Message', 'Title', { dir: 'rtl' });
+Fnon.Hint.Success('Done', { dir: 'rtl' });
+Fnon.DatePicker({ dir: 'rtl' });
+```
+
+### What gets flipped
+
+| Subsystem | RTL effect |
+|-----------|------------|
+| Modals | Controls (min/max/close) order reversed, drag uses `right` instead of `left` |
+| Hints | Positions `right-*` ↔ `left-*`, border accent on right side, progress bar anchors right, slide animations reverse |
+| ContextMenu | Submenus open to the left, arrow icons point left, keyboard arrows swap (`ArrowRight` closes, `ArrowLeft` opens) |
+| DatePicker | Navigation chevrons swap direction |
+
+`Fnon.Init({ dir: 'rtl' })` sets `document.documentElement.dir = "rtl"`, which cascades to all components.
 
 ---
 
