@@ -657,6 +657,7 @@
         <a href="#dialogue">6 Dialogue</a>
         <a href="#breaking">7 Breaking</a>
         <a href="#datepicker">8 DatePicker</a>
+        <a href="#contextmenu">9 ContextMenu</a>
       </div>
       </div>
 
@@ -715,6 +716,11 @@
                   onclick="Fnon.Hint.Dark('Dark!', 'Title')"
                 >
                   Dark
+                </button>
+                <button
+                  onclick="Fnon.Hint.Light('Light!', 'Title')"
+                >
+                  Light
                 </button>
               </div>
             </div>
@@ -929,8 +935,8 @@
             <tr>
               <td>title</td>
               <td>—</td>
-              <td>string</td>
-              <td>Bold title above the message</td>
+              <td>string | HTMLElement</td>
+              <td>Dialog title</td>
             </tr>
             <tr>
               <td>position</td>
@@ -1120,7 +1126,7 @@
       <section id="wait">
         <h2>2. Wait <span class="badge">Fnon.Wait.Type(text?, opts?)</span></h2>
         <p class="section-desc">
-          Full-page spinner overlay. 18 spinner types (3 CSS-only + 15 SVG).
+          Full-page spinner overlay. 5 spinner types (Orbit, Spin / Infinity, Ripple, Typing).
           Supports clickToClose, text label, custom color, and Remove/Change
           controls.
         </p>
@@ -1128,7 +1134,7 @@
         <div class="demo-grid">
           <div class="demo-card">
             <div class="card-body">
-              <h3>CSS spinners — Orbit, Pulse, Spin</h3>
+              <h3>CSS spinners — Orbit, Spin</h3>
               <p class="desc">
                 Lightweight CSS-only spinners with
                 <code>clickToClose: true</code> for dismiss.
@@ -1138,11 +1144,6 @@
                   onclick="Fnon.Wait.Orbit('Orbit', { clickToClose: true })"
                 >
                   Orbit
-                </button>
-                <button
-                  onclick="Fnon.Wait.Pulse('Pulse', { clickToClose: true })"
-                >
-                  Pulse
                 </button>
                 <button
                   onclick="Fnon.Wait.Spin('Spin', { clickToClose: true })"
@@ -1161,10 +1162,9 @@
 
           <div class="demo-card">
             <div class="card-body">
-              <h3>SVG spinners (15 types)</h3>
+              <h3>SVG spanners (Infinity, Ripple, Typing)</h3>
               <p class="desc">
-                Legacy SVG spinners: Infinity, Circle, Ripple, Typing, Bricks,
-                Gear, etc.
+                Lightweight SVG spinners: Infinity, Ripple, Typing.
               </p>
               <div class="card-actions" style="gap: 0.25rem">
                 <button
@@ -1177,12 +1177,6 @@
                 </button>
                 <button
                   class="small"
-                  onclick="Fnon.Wait.Circle('Circle', { clickToClose: true })"
-                >
-                  Circle
-                </button>
-                <button
-                  class="small"
                   onclick="Fnon.Wait.Ripple('Ripple', { clickToClose: true })"
                 >
                   Ripple
@@ -1192,72 +1186,6 @@
                   onclick="Fnon.Wait.Typing('Typing', { clickToClose: true })"
                 >
                   Typing
-                </button>
-                <button
-                  class="small"
-                  onclick="Fnon.Wait.Liquid('', { clickToClose: true })"
-                >
-                  Liquid
-                </button>
-                <button
-                  class="small"
-                  onclick="Fnon.Wait.Rainbow('', { clickToClose: true })"
-                >
-                  Rainbow
-                </button>
-                <button
-                  class="small"
-                  onclick="Fnon.Wait.Bricks('', { clickToClose: true })"
-                >
-                  Bricks
-                </button>
-                <button
-                  class="small"
-                  onclick="Fnon.Wait.Gear('', { clickToClose: true })"
-                >
-                  Gear
-                </button>
-                <button
-                  class="small"
-                  onclick="Fnon.Wait.Gears('', { clickToClose: true })"
-                >
-                  Gears
-                </button>
-                <button
-                  class="small"
-                  onclick="Fnon.Wait.Interwind('', { clickToClose: true })"
-                >
-                  Interwind
-                </button>
-                <button
-                  class="small"
-                  onclick="Fnon.Wait.LineDots('', { clickToClose: true })"
-                >
-                  LineDots
-                </button>
-                <button
-                  class="small"
-                  onclick="Fnon.Wait.ColorBar('', { clickToClose: true })"
-                >
-                  ColorBar
-                </button>
-                <button
-                  class="small"
-                  onclick="Fnon.Wait.CurveBar('', { clickToClose: true })"
-                >
-                  CurveBar
-                </button>
-                <button
-                  class="small"
-                  onclick="Fnon.Wait.ProgressBar('', { clickToClose: true })"
-                >
-                  ProgBar
-                </button>
-                <button
-                  class="small"
-                  onclick="Fnon.Wait.CircleDots('', { clickToClose: true })"
-                >
-                  CirDots
                 </button>
               </div>
             </div>
@@ -1289,13 +1217,13 @@
                 </button>
                 <button
                   onclick="
-                    Fnon.Wait.Pulse('Wide', {
+                    Fnon.Wait.Orbit('Wide', {
                       containerSize: '400px',
                       clickToClose: true,
                     })
                   "
                 >
-                  Wide Pulse
+                  Wide Orbit
                 </button>
               </div>
             </div>
@@ -1317,7 +1245,7 @@
                 <button
                   class="pri"
                   onclick="
-                    Fnon.Wait.Pulse('Working...');
+                    Fnon.Wait.Orbit('Working...');
                     setTimeout(() => Fnon.Wait.Change('Almost done...'), 1500);
                     setTimeout(() => Fnon.Wait.Remove(), 3000);
                   "
@@ -1327,7 +1255,7 @@
                 <button
                   onclick="
                     Fnon.Wait.Init({ svgColor: '#39DA8A' });
-                    Fnon.Wait.Orbit('Green', { clickToClose: true });
+                    Fnon.Wait.Spin('Green', { clickToClose: true });
                   "
                 >
                   Green Init
@@ -1365,7 +1293,7 @@
                   class="pri"
                   onclick="
                     (async () => {
-                      Fnon.Wait.Pulse.Async('Working...').then(() =>
+                      Fnon.Wait.Orbit.Async('Working...').then(() =>
                         Fnon.Hint.Success('Done!'),
                       );
                       setTimeout(() => Fnon.Wait.Remove(), 2000);
@@ -1377,7 +1305,7 @@
               </div>
             </div>
             <div class="code">
-              <span class="kw">Fnon</span>.Wait.Pulse.<span class="fn"
+              <span class="kw">Fnon</span>.Wait.Orbit.<span class="fn"
                 >Async</span
               >(<span class="str">'Working'</span>)<br />&nbsp;&nbsp;.then(() =>
               <span class="kw">Fnon</span>.Hint.Success(<span class="str"
@@ -1434,9 +1362,8 @@
             </tr>
             <tr>
               <td colspan="4" style="color: #63b3ed; text-align: center">
-                Spinner types: Orbit, Pulse, Spin (CSS) &bull; Infinity, Circle,
-                Ripple, Typing, Bricks, Gear, Gears, Rainbow, Liquid, Interwind,
-                LineDots, CircleDots, ColorBar, CurveBar, ProgressBar (SVG)
+                Spinner types: Orbit, Spin (CSS) &bull; Infinity,
+                Ripple, Typing (SVG)
               </td>
             </tr>
           </table>
@@ -1461,23 +1388,10 @@
               <label>Spinner type</label>
               <select id="wait-type">
                 <option>Orbit</option>
-                <option>Pulse</option>
                 <option>Spin</option>
                 <option>Infinity</option>
-                <option>Circle</option>
                 <option>Ripple</option>
                 <option>Typing</option>
-                <option>Bricks</option>
-                <option>Gear</option>
-                <option>Gears</option>
-                <option>Rainbow</option>
-                <option>Liquid</option>
-                <option>Interwind</option>
-                <option>LineDots</option>
-                <option>CircleDots</option>
-                <option>ColorBar</option>
-                <option>CurveBar</option>
-                <option>ProgressBar</option>
               </select>
             </div>
             <div class="sandbox-row">
@@ -1523,7 +1437,7 @@
           <span class="badge">Fnon.Box.Type(selector, text?, opts?)</span>
         </h2>
         <p class="section-desc">
-          Container-bound spinner overlay. Same 18 spinner types as Wait, but
+          Container-bound spinner overlay. Same 5 spinner types as Wait, but
           rendered inside a specific DOM element instead of full-screen.
         </p>
 
@@ -1538,9 +1452,6 @@
               <div class="card-actions">
                 <button onclick="Fnon.Box.Orbit('#box-target', 'Loading')">
                   Orbit
-                </button>
-                <button onclick="Fnon.Box.Pulse('#box-target', 'Syncing')">
-                  Pulse
                 </button>
                 <button onclick="Fnon.Box.Spin('#box-target', 'Working')">
                   Spin
@@ -1570,13 +1481,13 @@
               <div class="card-actions">
                 <button
                   onclick="
-                    Fnon.Box.Pulse('#box-target', 'Red', {
+                    Fnon.Box.Spin('#box-target', 'Red', {
                       svgColor: '#ff6b6b',
                     });
                     setTimeout(() => Fnon.Box.Remove('#box-target'), 2000);
                   "
                 >
-                  Red Pulse
+                  Red Spin
                 </button>
                 <button
                   onclick="
@@ -1611,7 +1522,7 @@
                 <button
                   onclick="
                     Fnon.Box.Init({ svgColor: '#39DA8A' });
-                    Fnon.Box.Orbit('#box-target', 'Green');
+                    Fnon.Box.Spin('#box-target', 'Green');
                     setTimeout(() => Fnon.Box.Remove('#box-target'), 2000);
                   "
                 >
@@ -1697,9 +1608,8 @@
             </tr>
             <tr>
               <td colspan="4" style="color: #63b3ed; text-align: center">
-                Same 18 spinner types as Wait: Orbit, Pulse, Spin, Infinity,
-                Circle, Ripple, Typing, Bricks, Gear, Gears, Rainbow, Liquid,
-                Interwind, LineDots, CircleDots, ColorBar, CurveBar, ProgressBar
+                Same 5 spinner types as Wait: Orbit, Spin, Infinity,
+                Ripple, Typing
               </td>
             </tr>
           </table>
@@ -1728,23 +1638,10 @@
               <label>Spinner type</label>
               <select id="box-type">
                 <option>Orbit</option>
-                <option>Pulse</option>
                 <option>Spin</option>
                 <option>Infinity</option>
-                <option>Circle</option>
                 <option>Ripple</option>
                 <option>Typing</option>
-                <option>Bricks</option>
-                <option>Gear</option>
-                <option>Gears</option>
-                <option>Rainbow</option>
-                <option>Liquid</option>
-                <option>Interwind</option>
-                <option>LineDots</option>
-                <option>CircleDots</option>
-                <option>ColorBar</option>
-                <option>CurveBar</option>
-                <option>ProgressBar</option>
               </select>
             </div>
             <div class="sandbox-row">
@@ -2118,6 +2015,24 @@
               <td>Shared mutable data for lifecycle callbacks</td>
             </tr>
             <tr>
+              <td>focusTrap</td>
+              <td>true</td>
+              <td>boolean</td>
+              <td>Lock Tab focus inside the modal</td>
+            </tr>
+            <tr>
+              <td>isDark</td>
+              <td>—</td>
+              <td>boolean | ()=>boolean</td>
+              <td>Enable dark mode for body &amp; footer</td>
+            </tr>
+            <tr>
+              <td>darkBgColor</td>
+              <td>'#1a202c'</td>
+              <td>color</td>
+              <td>Dark mode background color</td>
+            </tr>
+            <tr>
               <td>onOpen</td>
               <td>—</td>
               <td>(el,data)=>void</td>
@@ -2488,6 +2403,24 @@
               <td>—</td>
               <td>color</td>
               <td>Cancel button background</td>
+            </tr>
+            <tr>
+              <td>focusTrap</td>
+              <td>true</td>
+              <td>boolean</td>
+              <td>Lock Tab focus inside the modal</td>
+            </tr>
+            <tr>
+              <td>isDark</td>
+              <td>—</td>
+              <td>boolean | ()=>boolean</td>
+              <td>Enable dark mode for body &amp; footer</td>
+            </tr>
+            <tr>
+              <td>darkBgColor</td>
+              <td>'#1a202c'</td>
+              <td>color</td>
+              <td>Dark mode background color</td>
             </tr>
           </table>
         </div>
@@ -2928,6 +2861,24 @@
               <td>Mount container</td>
             </tr>
             <tr>
+              <td>focusTrap</td>
+              <td>true</td>
+              <td>boolean</td>
+              <td>Lock Tab focus inside the modal</td>
+            </tr>
+            <tr>
+              <td>isDark</td>
+              <td>—</td>
+              <td>boolean | ()=>boolean</td>
+              <td>Enable dark mode for body &amp; footer</td>
+            </tr>
+            <tr>
+              <td>darkBgColor</td>
+              <td>'#1a202c'</td>
+              <td>color</td>
+              <td>Dark mode background color</td>
+            </tr>
+            <tr>
               <td>onInit</td>
               <td>—</td>
               <td>(el,data)=>void</td>
@@ -3359,7 +3310,7 @@
         </div>
       </section>
 
-      <!-- ── Section 8: DatePicker ── -->
+      <!-- ══════════════════════════ DATEPICKER ══════════════════════════ -->
       <section id="datepicker">
         <h2>
           8. DatePicker
@@ -3559,6 +3510,103 @@
         </div>
       </section>
 
+      <!-- ══════════════════════════ CONTEXT MENU ══════════════════════════ -->
+      <section id="contextmenu">
+        <h2>
+          9. ContextMenu
+          <span class="badge">Fnon.ContextMenu(event, items[], globalOnClick?)</span>
+        </h2>
+        <p class="section-desc">
+          Right-click or programmatic context menu with nested submenus,
+          keyboard navigation, viewport-aware positioning, and dark mode support.
+        </p>
+
+        <div class="demo-grid">
+          <div class="demo-card">
+            <div class="card-body" style="text-align: center;">
+              <h3>Right-click anywhere</h3>
+              <p class="desc">
+                Right-click (or Ctrl+click) on this card to open the context menu.
+                Try submenus and keyboard navigation (Arrow keys, Enter, Escape).
+              </p>
+              <div class="card-actions" style="justify-content: center;">
+                <button class="pri" onclick="openContextMenu(event)">
+                  Open Context Menu
+                </button>
+                <button onclick="openContextMenuDark(event)">
+                  Dark menu
+                </button>
+              </div>
+            </div>
+            <div class="code">
+              <span class="kw">Fnon</span>.<span class="fn">ContextMenu</span>(event, [
+              <br />&nbsp;&nbsp;{ <span class="str">label</span>: <span class="str">'Edit'</span>, <span class="fn">onClick</span>: () => {} },
+              <br />&nbsp;&nbsp;{ <span class="str">label</span>: <span class="str">'Share'</span>,
+              <br />&nbsp;&nbsp;&nbsp;&nbsp;<span class="str">items</span>: [
+              <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{ <span class="str">label</span>: <span class="str">'Twitter'</span> },
+              <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{ <span class="str">label</span>: <span class="str">'Facebook'</span> },
+              <br />&nbsp;&nbsp;&nbsp;&nbsp;] },
+              <br />&nbsp;&nbsp;{ <span class="str">label</span>: <span class="str">'Delete'</span>, <span class="str">disabled</span>: <span class="pr">true</span> },
+              <br />])
+            </div>
+          </div>
+        </div>
+
+        <div class="ref-section">
+          <h3>ContextMenuItem</h3>
+          <table class="ref-table">
+            <tr>
+              <th>Prop</th>
+              <th>Type</th>
+              <th>Default</th>
+              <th>Description</th>
+            </tr>
+            <tr>
+              <td>label</td>
+              <td>string</td>
+              <td>—</td>
+              <td>Menu item text</td>
+            </tr>
+            <tr>
+              <td>onClick</td>
+              <td>() => void</td>
+              <td>—</td>
+              <td>Called when item is chosen. Ignored if <code>items</code> is set.</td>
+            </tr>
+            <tr>
+              <td>items</td>
+              <td>ContextMenuItem[]</td>
+              <td>—</td>
+              <td>Nested submenu (takes priority over onClick)</td>
+            </tr>
+            <tr>
+              <td>disabled</td>
+              <td>boolean</td>
+              <td>false</td>
+              <td>Gray out and prevent interaction</td>
+            </tr>
+            <tr>
+              <td>divider</td>
+              <td>boolean</td>
+              <td>false</td>
+              <td>Render as a visual separator</td>
+            </tr>
+            <tr>
+              <td>icon</td>
+              <td>string</td>
+              <td>—</td>
+              <td>Optional icon HTML (e.g. SVG) prepended to label</td>
+            </tr>
+          </table>
+        </div>
+
+        <p style="font-size: 0.82rem; color: #718096; margin: 0.5rem 0">
+          <strong>Keyboard:</strong> Arrow keys to navigate, Enter/Space to select,
+          Escape to close, ArrowRight to open submenu, ArrowLeft to close submenu.
+          <strong>Alias:</strong> <code>Fnon.CM(event, items, globalOnClick?)</code>
+        </p>
+      </section>
+
       <hr />
       <footer>
         Fnon.js v2.0.0 &mdash; Interactive Playground &middot; MIT License
@@ -3751,6 +3799,33 @@
           .catch(function () {
             Fnon.Hint.Info("Cancelled");
           });
+      }
+
+      // ── ContextMenu demo ──
+      function openContextMenu(e) {
+        e.preventDefault();
+        Fnon.ContextMenu(e, [
+          { label: 'Rename', icon: '<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>', onClick: function() { Fnon.Hint.Success('Renamed!'); } },
+          { label: 'Duplicate', onClick: function() { Fnon.Hint.Primary('Duplicated'); } },
+          { divider: true },
+          { label: 'Share', items: [
+            { label: 'Twitter', onClick: function() { Fnon.Hint.Info('Shared to Twitter'); } },
+            { label: 'Facebook', onClick: function() { Fnon.Hint.Info('Shared to Facebook'); } },
+            { divider: true },
+            { label: 'Copy Link', onClick: function() { Fnon.Hint.Light('Link copied!'); } },
+          ]},
+          { label: 'Delete', disabled: true },
+        ]);
+      }
+      function openContextMenuDark(e) {
+        e.preventDefault();
+        Fnon.Init({ isDark: true, darkBgColor: '#1e293b' });
+        Fnon.ContextMenu(e, [
+          { label: 'Edit', onClick: function() { Fnon.Hint.Primary('Edit'); } },
+          { label: 'Delete', onClick: function() { Fnon.Hint.Danger('Deleted!'); } },
+        ], function(label) {
+          Fnon.Hint.Warning('Global: ' + label);
+        });
       }
 
       // ── Dark/light theme toggle ──
