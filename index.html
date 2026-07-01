@@ -3548,13 +3548,13 @@
             </div>
             <div class="code">
               <span class="kw">Fnon</span>.<span class="fn">ContextMenu</span>(event, [
-              <br />&nbsp;&nbsp;{ <span class="str">label</span>: <span class="str">'Edit'</span>, <span class="fn">onClick</span>: () => {} },
-              <br />&nbsp;&nbsp;{ <span class="str">label</span>: <span class="str">'Share'</span>,
+              <br />&nbsp;&nbsp;{ <span class="str">text</span>: <span class="str">'Edit'</span>, <span class="fn">onClick</span>: () => {} },
+              <br />&nbsp;&nbsp;{ <span class="str">text</span>: <span class="str">'Share'</span>,
               <br />&nbsp;&nbsp;&nbsp;&nbsp;<span class="str">items</span>: [
-              <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{ <span class="str">label</span>: <span class="str">'Twitter'</span> },
-              <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{ <span class="str">label</span>: <span class="str">'Facebook'</span> },
+              <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{ <span class="str">text</span>: <span class="str">'Twitter'</span> },
+              <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{ <span class="str">text</span>: <span class="str">'Facebook'</span> },
               <br />&nbsp;&nbsp;&nbsp;&nbsp;] },
-              <br />&nbsp;&nbsp;{ <span class="str">label</span>: <span class="str">'Delete'</span>, <span class="str">disabled</span>: <span class="pr">true</span> },
+              <br />&nbsp;&nbsp;{ <span class="str">text</span>: <span class="str">'Delete'</span>, <span class="str">disabled</span>: <span class="pr">true</span> },
               <br />])
             </div>
           </div>
@@ -3813,26 +3813,24 @@
       function openContextMenu(e) {
         e.preventDefault();
         Fnon.ContextMenu(e, [
-          { label: 'Rename', icon: '<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>', onClick: function() { Fnon.Hint.Success('Renamed!'); } },
-          { label: 'Duplicate', onClick: function() { Fnon.Hint.Primary('Duplicated'); } },
-          { divider: true },
-          { label: 'Share', items: [
-            { label: 'Twitter', onClick: function() { Fnon.Hint.Info('Shared to Twitter'); } },
-            { label: 'Facebook', onClick: function() { Fnon.Hint.Info('Shared to Facebook'); } },
-            { divider: true },
-            { label: 'Copy Link', onClick: function() { Fnon.Hint.Light('Link copied!'); } },
+          { text: 'Rename', onClick: function() { Fnon.Hint.Success('Renamed!'); } },
+          { text: 'Duplicate', onClick: function() { Fnon.Hint.Primary('Duplicated'); } },
+          { text: 'Share', items: [
+            { text: 'Twitter', onClick: function() { Fnon.Hint.Info('Shared to Twitter'); } },
+            { text: 'Facebook', onClick: function() { Fnon.Hint.Info('Shared to Facebook'); } },
+            { text: 'Copy Link', onClick: function() { Fnon.Hint.Light('Link copied!'); } },
           ]},
-          { label: 'Delete', disabled: true },
+          { text: 'Delete', disabled: true },
         ]);
       }
       function openContextMenuDark(e) {
         e.preventDefault();
         Fnon.Init({ isDark: true, darkBgColor: '#1e293b' });
         Fnon.ContextMenu(e, [
-          { label: 'Edit', onClick: function() { Fnon.Hint.Primary('Edit'); } },
-          { label: 'Delete', onClick: function() { Fnon.Hint.Danger('Deleted!'); } },
-        ], function(label) {
-          Fnon.Hint.Warning('Global: ' + label);
+          { text: 'Edit', onClick: function() { Fnon.Hint.Primary('Edit'); } },
+          { text: 'Delete', onClick: function() { Fnon.Hint.Danger('Deleted!'); } },
+        ], function(item) {
+          Fnon.Hint.Warning('Global: ' + item.text);
         });
       }
 
