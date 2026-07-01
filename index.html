@@ -1,0 +1,3784 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Fnon.js v2 &mdash; Playground &amp; Demos</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="fnon.min.css" />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        font-family: "Quicksand", sans-serif;
+        background: #f5f7fa;
+        color: #222f3e;
+      }
+      .container {
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 2rem 1rem;
+      }
+      .header {
+        position: sticky;
+        top: 0px;
+        z-index: 9;
+        padding-bottom: 1rem;
+        padding-top: 1rem;
+        background: #f5f7fa;
+      }
+      [data-theme="dark"] .header {
+    background: #0f172a;
+}
+      h1 {
+        font-size: 1.8rem;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+      h1 small {
+        font-weight: 400;
+        font-size: 0.8rem;
+        color: #718096;
+      }
+      .sub {
+        color: #718096;
+        font-size: 0.9rem;
+        margin-bottom: 1.5rem;
+      }
+
+      section {
+        margin-bottom: 2rem;
+      }
+      section > h2 {
+        font-size: 1.2rem;
+        font-weight: 600;
+        margin-bottom: 0.2rem;
+      }
+      section > p.section-desc {
+        font-size: 0.82rem;
+        color: #718096;
+        margin-bottom: 0.75rem;
+      }
+
+      .demo-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(500px, 1fr));
+        gap: 1rem;
+      }
+      .demo-card {
+        background: #fff;
+        border-radius: 8px;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+        overflow: hidden;
+      }
+      .demo-card .card-body {
+        padding: 1rem;
+      }
+      .demo-card .card-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.4rem;
+        align-items: center;
+      }
+      .demo-card h3 {
+        font-size: 0.85rem;
+        font-weight: 600;
+        margin-bottom: 0.15rem;
+      }
+      .demo-card p.desc {
+        font-size: 0.73rem;
+        color: #718096;
+        margin-bottom: 0.5rem;
+      }
+
+      .demo-card button {
+        font-family: "Quicksand", sans-serif;
+        font-size: 0.75rem;
+        padding: 0.35rem 0.75rem;
+        border: 1px solid #e2e8f0;
+        border-radius: 6px;
+        background: #fff;
+        color: #2d3748;
+        cursor: pointer;
+        transition: all 0.15s;
+      }
+      .demo-card button:hover {
+        border-color: #029eff;
+        color: #029eff;
+        background: #ebf8ff;
+      }
+      .demo-card button:focus-visible {
+        outline: 2px solid #029eff;
+        outline-offset: 2px;
+      }
+      .demo-card button.pri {
+        background: #029eff;
+        color: #fff;
+        border-color: #029eff;
+      }
+      .demo-card button.pri:hover {
+        background: #0288e0;
+      }
+      .demo-card button.suc {
+        background: #39da8a;
+        color: #fff;
+        border-color: #39da8a;
+      }
+      .demo-card button.war {
+        background: #fdd347;
+        color: #222f3e;
+        border-color: #fdd347;
+      }
+      .demo-card button.dan {
+        background: #ff6b6b;
+        color: #fff;
+        border-color: #ff6b6b;
+      }
+      .demo-card button.inf {
+        background: #48dbfb;
+        color: #222f3e;
+        border-color: #48dbfb;
+      }
+      .demo-card button.drk {
+        background: #222f3e;
+        color: #fff;
+        border-color: #222f3e;
+      }
+      .demo-card button:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+      .demo-card button.small {
+        font-size: 0.65rem;
+        padding: 0.25rem 0.5rem;
+      }
+
+      .code {
+        font-size: 0.65rem;
+        background: #1a202c;
+        color: #a0aec0;
+        padding: 0.5rem 0.6rem;
+        border-radius: 0 0 6px 6px;
+        overflow-x: auto;
+        line-height: 1.5;
+        font-family: "Consolas", "Courier New", monospace;
+        user-select: all;
+        border-top: 1px solid #2d3748;
+        white-space: pre-wrap;
+      }
+      .code .kw {
+        color: #63b3ed;
+      }
+      .code .str {
+        color: #9ae6b4;
+      }
+      .code .fn {
+        color: #f6ad55;
+      }
+      .code .cm {
+        color: #718096;
+        font-style: italic;
+      }
+      .code .num {
+        color: #fbbf24;
+      }
+      .code .pr {
+        color: #fc8181;
+      }
+
+      .ref-section {
+        background: #1a202c;
+        border-radius: 8px;
+        padding: 1rem;
+        margin-top: 0.5rem;
+        overflow-x: auto;
+      }
+      .ref-section h3 {
+        color: #e2e8f0;
+        font-size: 0.85rem;
+        margin-bottom: 0.5rem;
+      }
+      .ref-section pre {
+        font-family: "Consolas", "Courier New", monospace;
+        font-size: 0.72rem;
+        color: #a0aec0;
+        line-height: 1.6;
+        white-space: pre-wrap;
+      }
+      .ref-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 0.72rem;
+        font-family: "Consolas", "Courier New", monospace;
+      }
+      .ref-table th {
+        color: #e2e8f0;
+        text-align: left;
+        padding: 6px 8px;
+        border-bottom: 1px solid #2d3748;
+        font-size: 0.7rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+      .ref-table td {
+        color: #a0aec0;
+        padding: 5px 8px;
+        border-bottom: 1px solid #1f2937;
+      }
+      .ref-table td:first-child {
+        color: #63b3ed;
+      }
+      .ref-table td:nth-child(2) {
+        color: #9ae6b4;
+      }
+      .ref-table td:nth-child(3) {
+        color: #fbbf24;
+      }
+      .ref-table td:nth-child(4) {
+        color: #6b7280;
+        font-style: italic;
+      }
+      .ref-table tr:hover td {
+        background: #1f2937;
+      }
+
+      .toc {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+        margin-bottom: 1.5rem;
+      }
+      .toc a {
+        font-size: 0.75rem;
+        padding: 0.3rem 0.6rem;
+        background: #e2e8f0;
+        border-radius: 6px;
+        color: #4a5568;
+        text-decoration: none;
+        transition: all 0.15s;
+      }
+      .toc a:hover {
+        background: #029eff;
+        color: #fff;
+      }
+
+      .badge {
+        font-size: 0.6rem;
+        background: #ebf8ff;
+        color: #029eff;
+        padding: 0.15rem 0.5rem;
+        border-radius: 99px;
+        font-weight: 600;
+        margin-left: 6px;
+        vertical-align: middle;
+        white-space: nowrap;
+      }
+      hr {
+        border: none;
+        border-top: 1px solid #e2e8f0;
+        margin: 2rem 0;
+      }
+      footer {
+        text-align: center;
+        font-size: 0.78rem;
+        color: #a0aec0;
+        padding-bottom: 2rem;
+      }
+      #box-target {
+        position: relative;
+        min-height: 80px;
+        background: #fff;
+        border-radius: 8px;
+        border: 2px dashed #e2e8f0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #a0aec0;
+        font-size: 0.82rem;
+        margin-top: 0.5rem;
+        transition: min-height 0.2s;
+      }
+
+      /* ── Sandbox form styles ── */
+      .sandbox {
+        background: #fff;
+        border-radius: 8px;
+        border: 2px solid #e2e8f0;
+        padding: 1rem;
+        margin-top: 0.75rem;
+      }
+      .sandbox h3 {
+        font-size: 0.9rem;
+        font-weight: 600;
+        margin-bottom: 0.2rem;
+        color: #2d3748;
+      }
+      .sandbox > p {
+        font-size: 0.73rem;
+        color: #718096;
+        margin-bottom: 0.75rem;
+      }
+      .sandbox-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 0.5rem 0.75rem;
+      }
+      .sandbox-row {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+      }
+      .sandbox-row label {
+        font-size: 0.7rem;
+        font-weight: 600;
+        color: #4a5568;
+        text-transform: uppercase;
+        letter-spacing: 0.03em;
+      }
+      .sandbox-row input,
+      .sandbox-row select {
+        font-family: "Quicksand", sans-serif;
+        font-size: 0.78rem;
+        padding: 0.35rem 0.5rem;
+        border: 1px solid #e2e8f0;
+        border-radius: 5px;
+        background: #f7fafc;
+        color: #2d3748;
+        transition: border-color 0.15s;
+      }
+      .sandbox-row input:focus,
+      .sandbox-row select:focus {
+        outline: none;
+        border-color: #029eff;
+        background: #fff;
+      }
+      .sandbox-row input[type="checkbox"] {
+        width: 18px;
+        height: 18px;
+        accent-color: #029eff;
+        cursor: pointer;
+      }
+      .sandbox-row input[type="color"] {
+        height: 34px;
+        cursor: pointer;
+        padding: 2px;
+      }
+      .sandbox-row .chk-row {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        padding-top: 4px;
+      }
+      .sandbox-row .chk-row label {
+        text-transform: none;
+        font-weight: 400;
+        font-size: 0.78rem;
+        cursor: pointer;
+      }
+      .sandbox-actions {
+        display: flex;
+        gap: 0.5rem;
+        align-items: center;
+        margin-top: 0.75rem;
+        padding-top: 0.75rem;
+        border-top: 1px solid #e2e8f0;
+      }
+      .sandbox-actions button {
+        font-family: "Quicksand", sans-serif;
+        font-size: 0.8rem;
+        padding: 0.4rem 1rem;
+        border: 1px solid #e2e8f0;
+        border-radius: 6px;
+        background: #fff;
+        color: #2d3748;
+        cursor: pointer;
+        transition: all 0.15s;
+      }
+      .sandbox-actions button:hover {
+        border-color: #029eff;
+        color: #029eff;
+        background: #ebf8ff;
+      }
+      .sandbox-actions button:focus-visible {
+        outline: 2px solid #029eff;
+        outline-offset: 2px;
+      }
+      .sandbox-actions button.pri {
+        background: #029eff;
+        color: #fff;
+        border-color: #029eff;
+      }
+      .sandbox-actions button.pri:hover {
+        background: #0288e0;
+      }
+      .sandbox-actions button.dan {
+        background: #ff6b6b;
+        color: #fff;
+        border-color: #ff6b6b;
+      }
+      .sandbox-actions button.dan:hover {
+        background: #e05555;
+      }
+      .sandbox-section-label {
+        grid-column: 1 / -1;
+        font-size: 0.68rem;
+        font-weight: 600;
+        color: #a0aec0;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        padding-top: 0.4rem;
+        border-top: 1px solid #edf2f7;
+        margin-top: 0.2rem;
+      }
+
+      /* ── Theme toggle ── */
+      .theme-toggle {
+        margin-left: auto;
+        background: none;
+        border: 2px solid #e2e8f0;
+        border-radius: 50%;
+        width: 36px;
+        height: 36px;
+        font-size: 1.1rem;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s;
+        flex-shrink: 0;
+        line-height: 1;
+        padding: 0;
+      }
+      .theme-toggle:hover {
+        border-color: #029eff;
+      }
+
+      /* ── Dark theme ── */
+      [data-theme="dark"] body {
+        background: #0f172a;
+        color: #e2e8f0;
+      }
+      [data-theme="dark"] .demo-card {
+        background: #1e293b;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+      }
+      [data-theme="dark"] .demo-card h3 {
+        color: #e2e8f0;
+      }
+      [data-theme="dark"] .demo-card p.desc {
+        color: #94a3b8;
+      }
+      [data-theme="dark"] .demo-card button {
+        background: #334155;
+        border-color: #475569;
+        color: #e2e8f0;
+      }
+      [data-theme="dark"] .demo-card button:hover {
+        border-color: #38bdf8;
+        color: #38bdf8;
+        background: #1e293b;
+      }
+      [data-theme="dark"] .demo-card button.pri {
+        background: #0284c7;
+        border-color: #0284c7;
+        color: #fff;
+      }
+      [data-theme="dark"] .demo-card button.pri:hover {
+        background: #0369a1;
+      }
+      [data-theme="dark"] .demo-card button.suc {
+        background: #16a34a;
+        border-color: #16a34a;
+      }
+      [data-theme="dark"] .demo-card button.suc:hover {
+        background: #15803d;
+      }
+      [data-theme="dark"] .demo-card button.war {
+        background: #ca8a04;
+        border-color: #ca8a04;
+        color: #fff;
+      }
+      [data-theme="dark"] .demo-card button.war:hover {
+        background: #a16207;
+      }
+      [data-theme="dark"] .demo-card button.dan {
+        background: #dc2626;
+        border-color: #dc2626;
+      }
+      [data-theme="dark"] .demo-card button.dan:hover {
+        background: #b91c1c;
+      }
+      [data-theme="dark"] .demo-card button.inf {
+        background: #0284c7;
+        border-color: #0284c7;
+      }
+      [data-theme="dark"] .demo-card button.inf:hover {
+        background: #0369a1;
+      }
+      [data-theme="dark"] .demo-card button.drk {
+        background: #64748b;
+        border-color: #64748b;
+      }
+      [data-theme="dark"] .demo-card button.drk:hover {
+        background: #475569;
+      }
+      [data-theme="dark"] h1 small {
+        color: #64748b;
+      }
+      [data-theme="dark"] .sub {
+        color: #94a3b8;
+      }
+      [data-theme="dark"] section > p.section-desc {
+        color: #94a3b8;
+      }
+      [data-theme="dark"] .toc a {
+        background: #334155;
+        color: #cbd5e1;
+      }
+      [data-theme="dark"] .toc a:hover {
+        background: #0284c7;
+        color: #fff;
+      }
+      [data-theme="dark"] .badge {
+        background: #0f172a;
+        color: #38bdf8;
+      }
+      [data-theme="dark"] hr {
+        border-color: #334155;
+      }
+      [data-theme="dark"] footer {
+        color: #64748b;
+      }
+      [data-theme="dark"] #box-target {
+        background: #1e293b;
+        border-color: #334155;
+        color: #64748b;
+      }
+      [data-theme="dark"] .sandbox {
+        background: #1e293b;
+        border-color: #334155;
+      }
+      [data-theme="dark"] .sandbox h3 {
+        color: #e2e8f0;
+      }
+      [data-theme="dark"] .sandbox > p {
+        color: #94a3b8;
+      }
+      [data-theme="dark"] .sandbox-row label {
+        color: #94a3b8;
+      }
+      [data-theme="dark"] .sandbox-row input,
+      [data-theme="dark"] .sandbox-row select {
+        background: #0f172a;
+        border-color: #475569;
+        color: #e2e8f0;
+      }
+      [data-theme="dark"] .sandbox-row input:focus,
+      [data-theme="dark"] .sandbox-row select:focus {
+        border-color: #38bdf8;
+        background: #0f172a;
+      }
+      [data-theme="dark"] .sandbox-actions {
+        border-color: #334155;
+      }
+      [data-theme="dark"] .sandbox-actions button {
+        background: #334155;
+        border-color: #475569;
+        color: #e2e8f0;
+      }
+      [data-theme="dark"] .sandbox-actions button:hover {
+        border-color: #38bdf8;
+        color: #38bdf8;
+        background: #1e293b;
+      }
+      [data-theme="dark"] .sandbox-actions button.pri {
+        background: #0284c7;
+        border-color: #0284c7;
+        color: #fff;
+      }
+      [data-theme="dark"] .sandbox-actions button.pri:hover {
+        background: #0369a1;
+      }
+      [data-theme="dark"] .sandbox-actions button.dan {
+        background: #dc2626;
+        border-color: #dc2626;
+        color: #fff;
+      }
+      [data-theme="dark"] .sandbox-actions button.dan:hover {
+        background: #b91c1c;
+      }
+      [data-theme="dark"] .theme-toggle {
+        border-color: #475569;
+      }
+      [data-theme="dark"] .theme-toggle:hover {
+        border-color: #38bdf8;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <h1>
+          Fnon.js v2.0.0
+          <small
+            >Interactive Playground &mdash; all APIs, live sandbox, Init
+            reference</small
+          >
+          <button
+            id="theme-toggle"
+            class="theme-toggle"
+            onclick="toggleTheme()"
+            title="Toggle dark/light mode"
+          >
+            🌙
+          </button>
+        </h1>
+        <p class="sub">
+          Seven feature sections. Each has code examples (try instantly), an
+          Init() config reference table, an Async explanation, and a live
+          sandbox form. Open browser console for lifecycle logs.
+        </p>
+         <div class="toc">
+        <a href="#hint">1 Hint</a>
+        <a href="#wait">2 Wait</a>
+        <a href="#box">3 Box</a>
+        <a href="#alert">4 Alert</a>
+        <a href="#ask">5 Ask</a>
+        <a href="#dialogue">6 Dialogue</a>
+        <a href="#breaking">7 Breaking</a>
+        <a href="#datepicker">8 DatePicker</a>
+      </div>
+      </div>
+
+     
+
+      <!-- ══════════════════════════ HINT ══════════════════════════ -->
+      <section id="hint">
+        <h2>
+          1. Hint <span class="badge">Fnon.Hint.Theme(msg, titleOrOpts?)</span>
+        </h2>
+        <p class="section-desc">
+          Toast-style notifications. Auto-dismisses after 4 seconds. 7 themes, 9
+          positions, customizable width/font/progress bar.
+        </p>
+
+        <div class="demo-grid">
+          <div class="demo-card">
+            <div class="card-body">
+              <h3>String + title</h3>
+              <p class="desc">
+                Fnon.Hint.Theme(message, title). Auto-dismisses after 4s.
+              </p>
+              <div class="card-actions">
+                <button
+                  class="pri"
+                  onclick="Fnon.Hint.Primary('Hello!', 'Title')"
+                >
+                  Primary
+                </button>
+                <button
+                  class="suc"
+                  onclick="Fnon.Hint.Success('Saved!', 'Title')"
+                >
+                  Success
+                </button>
+                <button
+                  class="dan"
+                  onclick="Fnon.Hint.Danger('Error!', 'Title')"
+                >
+                  Danger
+                </button>
+                <button
+                  class="war"
+                  onclick="Fnon.Hint.Warning('Warning!', 'Title')"
+                >
+                  Warning
+                </button>
+                <button
+                  class="inf"
+                  onclick="Fnon.Hint.Info('Info!', 'Title')"
+                >
+                  Info
+                </button>
+                <button
+                  class="dar"
+                  onclick="Fnon.Hint.Dark('Dark!', 'Title')"
+                >
+                  Dark
+                </button>
+              </div>
+            </div>
+            <div class="code">
+              <span class="kw">Fnon</span>.Hint.Success(<span class="str"
+                >'Message'</span
+              >, <span class="str">'Title'</span>)
+              <span class="kw">Fnon</span>.Hint.Warning(<span class="str"
+                >'Message'</span
+              >, <span class="str">'Title'</span>)
+              <span class="kw">Fnon</span>.Hint.Danger(<span class="str"
+                >'Message'</span
+              >, <span class="str">'Title'</span>)
+            </div>
+          </div>
+
+          <div class="demo-card">
+            <div class="card-body">
+              <h3>Position options</h3>
+              <p class="desc">
+                Pass object as 2nd arg: <code>{ position: 'left-top' }</code>. 9
+                positions available.
+              </p>
+              <div class="card-actions">
+                <button
+                  onclick="
+                    Fnon.Hint.Primary('right-top', { position: 'right-top' })
+                  "
+                >
+                  R-Top
+                </button>
+                <button
+                  onclick="
+                    Fnon.Hint.Primary('left-top', { position: 'left-top' })
+                  "
+                >
+                  L-Top
+                </button>
+                <button
+                  onclick="
+                    Fnon.Hint.Primary('center-top', { position: 'center-top' })
+                  "
+                >
+                  C-Top
+                </button>
+                <button
+                  onclick="
+                    Fnon.Hint.Primary('right-bottom', {
+                      position: 'right-bottom',
+                    })
+                  "
+                >
+                  R-Bottom
+                </button>
+                <button
+                  onclick="
+                    Fnon.Hint.Primary('center-center', {
+                      position: 'center-center',
+                    })
+                  "
+                >
+                  Center
+                </button>
+              </div>
+            </div>
+            <div class="code">
+              <span class="kw">Fnon</span>.Hint.Primary(<span class="str"
+                >'msg'</span
+              >, { <span class="str">position</span>:
+              <span class="str">'left-top'</span> })
+            </div>
+          </div>
+
+          <div class="demo-card">
+            <div class="card-body">
+              <h3>closable + timeOut</h3>
+              <p class="desc">
+                Disable the X button or control auto-dismiss timeout.
+              </p>
+              <div class="card-actions">
+                <button
+                  onclick="
+                    Fnon.Hint.Primary('No close btn, 3s', {
+                      closable: false,
+                      timeOut: 3000,
+                    })
+                  "
+                >
+                  No Close / 3s
+                </button>
+                <button
+                  onclick="Fnon.Hint.Success('10 seconds', { timeOut: 10000 })"
+                >
+                  10 seconds
+                </button>
+              </div>
+            </div>
+            <div class="code">
+              <span class="kw">Fnon</span>.Hint.Primary(<span class="str"
+                >'msg'</span
+              >, { <span class="str">closable</span>:
+              <span class="pr">false</span>, <span class="str">timeOut</span>:
+              <span class="num">3000</span> })
+            </div>
+          </div>
+
+          <div class="demo-card">
+            <div class="card-body">
+              <h3>width + fontSize + spacing</h3>
+              <p class="desc">
+                Control hint dimensions and gap between stacked hints.
+              </p>
+              <div class="card-actions">
+                <button
+                  onclick="
+                    Fnon.Hint.Primary('Wide hint', 'Wide', {
+                      width: '500px',
+                      timeOut: 4000,
+                    })
+                  "
+                >
+                  Wide (500px)
+                </button>
+                <button
+                  onclick="
+                    Fnon.Hint.Success('Large text', 'Big', {
+                      fontSize: '1.1rem',
+                      timeOut: 3000,
+                    })
+                  "
+                >
+                  Large Font
+                </button>
+                <button
+                  onclick="
+                    Fnon.Hint.Warning('Extra spacing', 'Space', {
+                      spacing: '24px',
+                      timeOut: 3000,
+                    })
+                  "
+                >
+                  Spacing (24px)
+                </button>
+              </div>
+            </div>
+            <div class="code">
+              <span class="kw">Fnon</span>.Hint.Primary(<span class="str"
+                >'msg'</span
+              >, { <span class="str">width</span>:
+              <span class="str">'500px'</span> })
+            </div>
+          </div>
+
+          <div class="demo-card">
+            <div class="card-body">
+              <h3>Progress bar + Hint.Init</h3>
+              <p class="desc">
+                Progress bar shows remaining time. Use Init() to set global
+                defaults.
+              </p>
+              <div class="card-actions">
+                <button
+                  class="pri"
+                  onclick="
+                    Fnon.Hint.Primary('6 second progress', 'Progress', {
+                      timeOut: 6000,
+                    })
+                  "
+                >
+                  6s Progress
+                </button>
+                <button
+                  onclick="
+                    Fnon.Hint.Init({ timeOut: 6000, position: 'left-top' });
+                    Fnon.Hint.Success('Defaults changed!', '.Init');
+                  "
+                >
+                  Apply .Init
+                </button>
+                <button
+                  onclick="
+                    Fnon.Hint.Init({ timeOut: 4000, position: 'right-top' });
+                    Fnon.Hint.Info('Reset');
+                  "
+                >
+                  Reset
+                </button>
+              </div>
+            </div>
+            <div class="code">
+              <span class="kw">Fnon</span>.Hint.<span class="fn">Init</span>({
+              <span class="str">timeOut</span>: <span class="num">6000</span> })
+            </div>
+          </div>
+        </div>
+
+        <div class="ref-section">
+          <h3>HintOptions &mdash; Init() config reference</h3>
+          <table class="ref-table">
+            <tr>
+              <th>Option</th>
+              <th>Default</th>
+              <th>Type</th>
+              <th>Description</th>
+            </tr>
+            <tr>
+              <td>type</td>
+              <td>'Primary'</td>
+              <td>ThemeName</td>
+              <td>Theme key (set automatically by shortcut)</td>
+            </tr>
+            <tr>
+              <td>title</td>
+              <td>—</td>
+              <td>string</td>
+              <td>Bold title above the message</td>
+            </tr>
+            <tr>
+              <td>position</td>
+              <td>'right-top'</td>
+              <td>string</td>
+              <td>
+                right-top, right-center, right-bottom, left-top, left-center,
+                left-bottom, center-top, center-center, center-bottom
+              </td>
+            </tr>
+            <tr>
+              <td>timeOut</td>
+              <td>4000</td>
+              <td>number (ms)</td>
+              <td>Auto-dismiss after N ms (0 = no dismiss)</td>
+            </tr>
+            <tr>
+              <td>closable</td>
+              <td>true</td>
+              <td>boolean</td>
+              <td>Show/hide the X button</td>
+            </tr>
+            <tr>
+              <td>width</td>
+              <td>'360px'</td>
+              <td>string</td>
+              <td>Hint container max-width</td>
+            </tr>
+            <tr>
+              <td>fontSize</td>
+              <td>'0.88rem'</td>
+              <td>string</td>
+              <td>Hint text size</td>
+            </tr>
+            <tr>
+              <td>fontFamily</td>
+              <td>'Quicksand', sans-serif</td>
+              <td>string</td>
+              <td>Font family</td>
+            </tr>
+            <tr>
+              <td>spacing</td>
+              <td>'8px'</td>
+              <td>string</td>
+              <td>Gap between stacked hints</td>
+            </tr>
+            <tr>
+              <td>animation</td>
+              <td>'slide-left'</td>
+              <td>string</td>
+              <td>CSS animation class</td>
+            </tr>
+            <tr>
+              <td>animationDuration</td>
+              <td>'0.3s'</td>
+              <td>string</td>
+              <td>Enter/exit transition duration</td>
+            </tr>
+            <tr>
+              <td>progressColor</td>
+              <td>—</td>
+              <td>color</td>
+              <td>Progress bar color (defaults to theme borderColor)</td>
+            </tr>
+            <tr>
+              <td>svg</td>
+              <td>—</td>
+              <td>string</td>
+              <td>Custom icon SVG HTML</td>
+            </tr>
+            <tr>
+              <td>svgSize</td>
+              <td>{w:20,h:20}</td>
+              <td>object</td>
+              <td>Icon dimensions in px</td>
+            </tr>
+            <tr>
+              <td>appendTo</td>
+              <td>body</td>
+              <td>selector</td>
+              <td>Mount container element</td>
+            </tr>
+            <tr>
+              <td>onClose</td>
+              <td>—</td>
+              <td>() => void</td>
+              <td>Called when hint is dismissed</td>
+            </tr>
+            <tr>
+              <td>onclosed</td>
+              <td>—</td>
+              <td>() => void</td>
+              <td>Called after hint is fully removed</td>
+            </tr>
+          </table>
+        </div>
+
+        <p style="font-size: 0.82rem; color: #718096; margin: 0.5rem 0">
+          <strong>Async:</strong>
+          <code>Fnon.Hint.Theme.Async(message, title?)</code> returns a
+          <code>Promise&lt;void&gt;</code> that resolves when the hint closes
+          (auto or manual). Useful for sequencing notifications.
+        </p>
+
+        <div class="sandbox">
+          <h3>Sandbox &mdash; Hint</h3>
+          <p>Fill in the fields and click Run to see the hint live.</p>
+          <div class="sandbox-grid">
+            <div class="sandbox-row">
+              <label>Message</label>
+              <input
+                type="text"
+                id="hint-msg"
+                value="Hello from the sandbox!"
+              />
+            </div>
+            <div class="sandbox-row">
+              <label>Title</label>
+              <input type="text" id="hint-title" value="Sandbox" />
+            </div>
+            <div class="sandbox-row">
+              <label>Theme</label>
+              <select id="hint-theme">
+                <option>Primary</option>
+                <option>Success</option>
+                <option>Warning</option>
+                <option>Danger</option>
+                <option>Info</option>
+                <option>Light</option>
+                <option>Dark</option>
+              </select>
+            </div>
+            <div class="sandbox-row">
+              <label>Position</label>
+              <select id="hint-position">
+                <option>right-top</option>
+                <option>right-center</option>
+                <option>right-bottom</option>
+                <option>left-top</option>
+                <option>left-center</option>
+                <option>left-bottom</option>
+                <option>center-top</option>
+                <option>center-center</option>
+                <option>center-bottom</option>
+              </select>
+            </div>
+            <div class="sandbox-row">
+              <label>timeOut (ms)</label>
+              <input type="number" id="hint-timeout" value="4000" />
+            </div>
+            <div class="sandbox-row">
+              <label>Width</label>
+              <input type="text" id="hint-width" value="360px" />
+            </div>
+            <div class="sandbox-row">
+              <label>Font size</label>
+              <input type="text" id="hint-fontsize" value="0.88rem" />
+            </div>
+            <div class="sandbox-row">
+              <label>Progress color</label>
+              <input type="color" id="hint-progresscolor" value="#029eff" />
+            </div>
+            <div class="sandbox-row">
+              <div class="chk-row">
+                <input type="checkbox" id="hint-closable" checked />
+                <label for="hint-closable">Closable (show X button)</label>
+              </div>
+            </div>
+          </div>
+          <div class="sandbox-actions">
+            <button class="pri" onclick="runHintSandbox()">Run Hint</button>
+            <button
+              onclick="
+                (async () => {
+                  await Fnon.Hint.Primary.Async('Async resolved!', 'Async');
+                  Fnon.Hint.Success('Promise resolved!');
+                })()
+              "
+            >
+              Try .Async
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ══════════════════════════ WAIT ══════════════════════════ -->
+      <section id="wait">
+        <h2>2. Wait <span class="badge">Fnon.Wait.Type(text?, opts?)</span></h2>
+        <p class="section-desc">
+          Full-page spinner overlay. 18 spinner types (3 CSS-only + 15 SVG).
+          Supports clickToClose, text label, custom color, and Remove/Change
+          controls.
+        </p>
+
+        <div class="demo-grid">
+          <div class="demo-card">
+            <div class="card-body">
+              <h3>CSS spinners — Orbit, Pulse, Spin</h3>
+              <p class="desc">
+                Lightweight CSS-only spinners with
+                <code>clickToClose: true</code> for dismiss.
+              </p>
+              <div class="card-actions">
+                <button
+                  onclick="Fnon.Wait.Orbit('Orbit', { clickToClose: true })"
+                >
+                  Orbit
+                </button>
+                <button
+                  onclick="Fnon.Wait.Pulse('Pulse', { clickToClose: true })"
+                >
+                  Pulse
+                </button>
+                <button
+                  onclick="Fnon.Wait.Spin('Spin', { clickToClose: true })"
+                >
+                  Spin
+                </button>
+              </div>
+            </div>
+            <div class="code">
+              <span class="kw">Fnon</span>.Wait.Orbit(<span class="str"
+                >'Loading'</span
+              >, { <span class="str">clickToClose</span>:
+              <span class="pr">true</span> })
+            </div>
+          </div>
+
+          <div class="demo-card">
+            <div class="card-body">
+              <h3>SVG spinners (15 types)</h3>
+              <p class="desc">
+                Legacy SVG spinners: Infinity, Circle, Ripple, Typing, Bricks,
+                Gear, etc.
+              </p>
+              <div class="card-actions" style="gap: 0.25rem">
+                <button
+                  class="small"
+                  onclick="
+                    Fnon.Wait.Infinity('Infinity', { clickToClose: true })
+                  "
+                >
+                  &infin;
+                </button>
+                <button
+                  class="small"
+                  onclick="Fnon.Wait.Circle('Circle', { clickToClose: true })"
+                >
+                  Circle
+                </button>
+                <button
+                  class="small"
+                  onclick="Fnon.Wait.Ripple('Ripple', { clickToClose: true })"
+                >
+                  Ripple
+                </button>
+                <button
+                  class="small"
+                  onclick="Fnon.Wait.Typing('Typing', { clickToClose: true })"
+                >
+                  Typing
+                </button>
+                <button
+                  class="small"
+                  onclick="Fnon.Wait.Liquid('', { clickToClose: true })"
+                >
+                  Liquid
+                </button>
+                <button
+                  class="small"
+                  onclick="Fnon.Wait.Rainbow('', { clickToClose: true })"
+                >
+                  Rainbow
+                </button>
+                <button
+                  class="small"
+                  onclick="Fnon.Wait.Bricks('', { clickToClose: true })"
+                >
+                  Bricks
+                </button>
+                <button
+                  class="small"
+                  onclick="Fnon.Wait.Gear('', { clickToClose: true })"
+                >
+                  Gear
+                </button>
+                <button
+                  class="small"
+                  onclick="Fnon.Wait.Gears('', { clickToClose: true })"
+                >
+                  Gears
+                </button>
+                <button
+                  class="small"
+                  onclick="Fnon.Wait.Interwind('', { clickToClose: true })"
+                >
+                  Interwind
+                </button>
+                <button
+                  class="small"
+                  onclick="Fnon.Wait.LineDots('', { clickToClose: true })"
+                >
+                  LineDots
+                </button>
+                <button
+                  class="small"
+                  onclick="Fnon.Wait.ColorBar('', { clickToClose: true })"
+                >
+                  ColorBar
+                </button>
+                <button
+                  class="small"
+                  onclick="Fnon.Wait.CurveBar('', { clickToClose: true })"
+                >
+                  CurveBar
+                </button>
+                <button
+                  class="small"
+                  onclick="Fnon.Wait.ProgressBar('', { clickToClose: true })"
+                >
+                  ProgBar
+                </button>
+                <button
+                  class="small"
+                  onclick="Fnon.Wait.CircleDots('', { clickToClose: true })"
+                >
+                  CirDots
+                </button>
+              </div>
+            </div>
+            <div class="code">
+              <span class="kw">Fnon</span>.Wait.Infinity(<span class="str"
+                >'Loading'</span
+              >, { <span class="str">clickToClose</span>:
+              <span class="pr">true</span> })
+            </div>
+          </div>
+
+          <div class="demo-card">
+            <div class="card-body">
+              <h3>Custom color + containerSize</h3>
+              <p class="desc">
+                Override <code>svgColor</code> and <code>containerSize</code> to
+                match your brand.
+              </p>
+              <div class="card-actions">
+                <button
+                  onclick="
+                    Fnon.Wait.Orbit('Red', {
+                      svgColor: '#ff6b6b',
+                      clickToClose: true,
+                    })
+                  "
+                >
+                  Red Orbit
+                </button>
+                <button
+                  onclick="
+                    Fnon.Wait.Pulse('Wide', {
+                      containerSize: '400px',
+                      clickToClose: true,
+                    })
+                  "
+                >
+                  Wide Pulse
+                </button>
+              </div>
+            </div>
+            <div class="code">
+              <span class="kw">Fnon</span>.Wait.Orbit(<span class="str"
+                >'Loading'</span
+              >, { <span class="str">svgColor</span>:
+              <span class="str">'#ff6b6b'</span> })
+            </div>
+          </div>
+
+          <div class="demo-card">
+            <div class="card-body">
+              <h3>Wait controls + Wait.Init</h3>
+              <p class="desc">
+                Remove(), Change(text), and Init() for global defaults.
+              </p>
+              <div class="card-actions">
+                <button
+                  class="pri"
+                  onclick="
+                    Fnon.Wait.Pulse('Working...');
+                    setTimeout(() => Fnon.Wait.Change('Almost done...'), 1500);
+                    setTimeout(() => Fnon.Wait.Remove(), 3000);
+                  "
+                >
+                  3s demo
+                </button>
+                <button
+                  onclick="
+                    Fnon.Wait.Init({ svgColor: '#39DA8A' });
+                    Fnon.Wait.Orbit('Green', { clickToClose: true });
+                  "
+                >
+                  Green Init
+                </button>
+                <button
+                  onclick="
+                    Fnon.Wait.Init({ svgColor: '#029eff' });
+                    Fnon.Hint.Info('Reset');
+                  "
+                >
+                  Reset
+                </button>
+              </div>
+            </div>
+            <div class="code">
+              <span class="kw">Fnon</span>.Wait.Pulse(<span class="str"
+                >'Working'</span
+              >)<br /><span class="kw">Fnon</span>.Wait.<span class="fn"
+                >Change</span
+              >(<span class="str">'New text'</span>)<br /><span class="kw"
+                >Fnon</span
+              >.Wait.<span class="fn">Remove</span>()
+            </div>
+          </div>
+
+          <div class="demo-card">
+            <div class="card-body">
+              <h3>Wait.Async</h3>
+              <p class="desc">
+                Returns a Promise that resolves when Remove() is called or the
+                spinner is dismissed.
+              </p>
+              <div class="card-actions">
+                <button
+                  class="pri"
+                  onclick="
+                    (async () => {
+                      Fnon.Wait.Pulse.Async('Working...').then(() =>
+                        Fnon.Hint.Success('Done!'),
+                      );
+                      setTimeout(() => Fnon.Wait.Remove(), 2000);
+                    })()
+                  "
+                >
+                  Wait.Async (2s)
+                </button>
+              </div>
+            </div>
+            <div class="code">
+              <span class="kw">Fnon</span>.Wait.Pulse.<span class="fn"
+                >Async</span
+              >(<span class="str">'Working'</span>)<br />&nbsp;&nbsp;.then(() =>
+              <span class="kw">Fnon</span>.Hint.Success(<span class="str"
+                >'Done!'</span
+              >))
+            </div>
+          </div>
+        </div>
+
+        <div class="ref-section">
+          <h3>SpinnerOptions &mdash; Wait</h3>
+          <table class="ref-table">
+            <tr>
+              <th>Option</th>
+              <th>Default</th>
+              <th>Type</th>
+              <th>Description</th>
+            </tr>
+            <tr>
+              <td>text</td>
+              <td>''</td>
+              <td>string</td>
+              <td>Label text below the spinner</td>
+            </tr>
+            <tr>
+              <td>clickToClose</td>
+              <td>false</td>
+              <td>boolean</td>
+              <td>Click the overlay to dismiss</td>
+            </tr>
+            <tr>
+              <td>svgColor</td>
+              <td>'#029eff'</td>
+              <td>color</td>
+              <td>Spinner / accent color</td>
+            </tr>
+            <tr>
+              <td>fontFamily</td>
+              <td>'Quicksand', sans-serif</td>
+              <td>string</td>
+              <td>Font family for text</td>
+            </tr>
+            <tr>
+              <td>containerSize</td>
+              <td>—</td>
+              <td>string</td>
+              <td>Spinner box width (e.g. '400px')</td>
+            </tr>
+            <tr>
+              <td>appendTarget</td>
+              <td>body</td>
+              <td>selector</td>
+              <td>Mount container</td>
+            </tr>
+            <tr>
+              <td colspan="4" style="color: #63b3ed; text-align: center">
+                Spinner types: Orbit, Pulse, Spin (CSS) &bull; Infinity, Circle,
+                Ripple, Typing, Bricks, Gear, Gears, Rainbow, Liquid, Interwind,
+                LineDots, CircleDots, ColorBar, CurveBar, ProgressBar (SVG)
+              </td>
+            </tr>
+          </table>
+        </div>
+
+        <p style="font-size: 0.82rem; color: #718096; margin: 0.5rem 0">
+          <strong>Async:</strong>
+          <code>Fnon.Wait.Type.Async(text?, opts?)</code> returns
+          <code>Promise&lt;boolean&gt;</code> (resolves <code>true</code> when
+          <code>Remove()</code> is called or the spinner is dismissed).
+        </p>
+
+        <div class="sandbox">
+          <h3>Sandbox &mdash; Wait</h3>
+          <p>Select a spinner type, configure options, and launch.</p>
+          <div class="sandbox-grid">
+            <div class="sandbox-row">
+              <label>Text</label>
+              <input type="text" id="wait-text" value="Loading..." />
+            </div>
+            <div class="sandbox-row">
+              <label>Spinner type</label>
+              <select id="wait-type">
+                <option>Orbit</option>
+                <option>Pulse</option>
+                <option>Spin</option>
+                <option>Infinity</option>
+                <option>Circle</option>
+                <option>Ripple</option>
+                <option>Typing</option>
+                <option>Bricks</option>
+                <option>Gear</option>
+                <option>Gears</option>
+                <option>Rainbow</option>
+                <option>Liquid</option>
+                <option>Interwind</option>
+                <option>LineDots</option>
+                <option>CircleDots</option>
+                <option>ColorBar</option>
+                <option>CurveBar</option>
+                <option>ProgressBar</option>
+              </select>
+            </div>
+            <div class="sandbox-row">
+              <label>svgColor</label>
+              <input type="color" id="wait-svgcolor" value="#029eff" />
+            </div>
+            <div class="sandbox-row">
+              <label>Container size</label>
+              <input
+                type="text"
+                id="wait-containersize"
+                placeholder="e.g. 400px"
+              />
+            </div>
+            <div class="sandbox-row">
+              <label>Font family</label>
+              <input
+                type="text"
+                id="wait-fontfamily"
+                value="'Quicksand', sans-serif"
+              />
+            </div>
+            <div class="sandbox-row">
+              <div class="chk-row">
+                <input type="checkbox" id="wait-clicktoclose" />
+                <label for="wait-clicktoclose">Click to close</label>
+              </div>
+            </div>
+          </div>
+          <div class="sandbox-actions">
+            <button class="pri" onclick="runWaitSandbox()">Run Wait</button>
+            <button class="dan" onclick="Fnon.Wait.Remove()">
+              Remove Wait
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ══════════════════════════ BOX ══════════════════════════ -->
+      <section id="box">
+        <h2>
+          3. Box
+          <span class="badge">Fnon.Box.Type(selector, text?, opts?)</span>
+        </h2>
+        <p class="section-desc">
+          Container-bound spinner overlay. Same 18 spinner types as Wait, but
+          rendered inside a specific DOM element instead of full-screen.
+        </p>
+
+        <div class="demo-grid">
+          <div class="demo-card">
+            <div class="card-body">
+              <h3>Spinner in container</h3>
+              <p class="desc">
+                First arg is a CSS selector. Spinner appears inside that
+                element.
+              </p>
+              <div class="card-actions">
+                <button onclick="Fnon.Box.Orbit('#box-target', 'Loading')">
+                  Orbit
+                </button>
+                <button onclick="Fnon.Box.Pulse('#box-target', 'Syncing')">
+                  Pulse
+                </button>
+                <button onclick="Fnon.Box.Spin('#box-target', 'Working')">
+                  Spin
+                </button>
+                <button onclick="Fnon.Box.Infinity('#box-target', '&infin;')">
+                  Infinity
+                </button>
+                <button class="dan" onclick="Fnon.Box.Remove('#box-target')">
+                  Remove
+                </button>
+              </div>
+            </div>
+            <div class="code">
+              <span class="kw">Fnon</span>.Box.Orbit(<span class="str"
+                >'#box-target'</span
+              >, <span class="str">'Loading'</span>)
+            </div>
+          </div>
+
+          <div class="demo-card">
+            <div class="card-body">
+              <h3>Custom color + svgSize</h3>
+              <p class="desc">
+                Override <code>svgColor</code> and <code>svgSize</code> for the
+                box spinner.
+              </p>
+              <div class="card-actions">
+                <button
+                  onclick="
+                    Fnon.Box.Pulse('#box-target', 'Red', {
+                      svgColor: '#ff6b6b',
+                    });
+                    setTimeout(() => Fnon.Box.Remove('#box-target'), 2000);
+                  "
+                >
+                  Red Pulse
+                </button>
+                <button
+                  onclick="
+                    Fnon.Box.Orbit('#box-target', 'Big', {
+                      svgSize: { w: 80, h: 80 },
+                    });
+                    setTimeout(() => Fnon.Box.Remove('#box-target'), 2000);
+                  "
+                >
+                  Big Orbit
+                </button>
+              </div>
+            </div>
+            <div class="code">
+              <span class="kw">Fnon</span>.Box.Orbit(<span class="str"
+                >'#box-target'</span
+              >, <span class="str">'Loading'</span>, {
+              <span class="str">svgSize</span>: { <span class="str">w</span>:
+              <span class="num">80</span>, <span class="str">h</span>:
+              <span class="num">80</span> } })
+            </div>
+          </div>
+
+          <div class="demo-card">
+            <div class="card-body">
+              <h3>Box.Init + Box.Async</h3>
+              <p class="desc">
+                <code>Box.Init</code> sets global defaults.
+                <code>Box.Async</code> returns a Promise.
+              </p>
+              <div class="card-actions">
+                <button
+                  onclick="
+                    Fnon.Box.Init({ svgColor: '#39DA8A' });
+                    Fnon.Box.Orbit('#box-target', 'Green');
+                    setTimeout(() => Fnon.Box.Remove('#box-target'), 2000);
+                  "
+                >
+                  Green Init
+                </button>
+                <button
+                  onclick="
+                    Fnon.Box.Init({ svgColor: '#029eff' });
+                    Fnon.Hint.Info('Reset');
+                  "
+                >
+                  Reset
+                </button>
+                <button
+                  class="pri"
+                  onclick="
+                    (async () => {
+                      Fnon.Box.Pulse.Async('#box-target', 'Working...').then(
+                        () => Fnon.Hint.Success('Box done!'),
+                      );
+                      setTimeout(() => Fnon.Box.Remove('#box-target'), 1500);
+                    })()
+                  "
+                >
+                  Box.Async (1.5s)
+                </button>
+              </div>
+            </div>
+            <div class="code">
+              <span class="kw">Fnon</span>.Box.<span class="fn">Init</span>({
+              <span class="str">svgColor</span>:
+              <span class="str">'#39DA8A'</span> })
+            </div>
+          </div>
+        </div>
+
+        <div id="box-target">#box-target &mdash; spinners appear here</div>
+
+        <div class="ref-section">
+          <h3>BoxOptions &mdash; Box</h3>
+          <table class="ref-table">
+            <tr>
+              <th>Option</th>
+              <th>Default</th>
+              <th>Type</th>
+              <th>Description</th>
+            </tr>
+            <tr>
+              <td>selector</td>
+              <td>—</td>
+              <td>string</td>
+              <td>CSS selector for the target element</td>
+            </tr>
+            <tr>
+              <td>text</td>
+              <td>''</td>
+              <td>string</td>
+              <td>Label below the spinner</td>
+            </tr>
+            <tr>
+              <td>svgColor</td>
+              <td>'#029eff'</td>
+              <td>color</td>
+              <td>Spinner accent color</td>
+            </tr>
+            <tr>
+              <td>svgSize</td>
+              <td>—</td>
+              <td>{w,h}</td>
+              <td>Spinner SVG dimensions in px</td>
+            </tr>
+            <tr>
+              <td>fontFamily</td>
+              <td>'Quicksand', sans-serif</td>
+              <td>string</td>
+              <td>Font family for text</td>
+            </tr>
+            <tr>
+              <td>containerSize</td>
+              <td>—</td>
+              <td>string</td>
+              <td>Spinner box width</td>
+            </tr>
+            <tr>
+              <td colspan="4" style="color: #63b3ed; text-align: center">
+                Same 18 spinner types as Wait: Orbit, Pulse, Spin, Infinity,
+                Circle, Ripple, Typing, Bricks, Gear, Gears, Rainbow, Liquid,
+                Interwind, LineDots, CircleDots, ColorBar, CurveBar, ProgressBar
+              </td>
+            </tr>
+          </table>
+        </div>
+
+        <p style="font-size: 0.82rem; color: #718096; margin: 0.5rem 0">
+          <strong>Async:</strong>
+          <code>Fnon.Box.Type.Async(selector, text?, opts?)</code> returns
+          <code>Promise&lt;boolean&gt;</code> (resolves <code>true</code> when
+          <code>Box.Remove(selector)</code> is called).
+        </p>
+
+        <div class="sandbox">
+          <h3>Sandbox &mdash; Box</h3>
+          <p>Enter a CSS selector and configure the spinner.</p>
+          <div class="sandbox-grid">
+            <div class="sandbox-row">
+              <label>CSS selector</label>
+              <input type="text" id="box-selector" value="#box-target" />
+            </div>
+            <div class="sandbox-row">
+              <label>Text</label>
+              <input type="text" id="box-text" value="Working..." />
+            </div>
+            <div class="sandbox-row">
+              <label>Spinner type</label>
+              <select id="box-type">
+                <option>Orbit</option>
+                <option>Pulse</option>
+                <option>Spin</option>
+                <option>Infinity</option>
+                <option>Circle</option>
+                <option>Ripple</option>
+                <option>Typing</option>
+                <option>Bricks</option>
+                <option>Gear</option>
+                <option>Gears</option>
+                <option>Rainbow</option>
+                <option>Liquid</option>
+                <option>Interwind</option>
+                <option>LineDots</option>
+                <option>CircleDots</option>
+                <option>ColorBar</option>
+                <option>CurveBar</option>
+                <option>ProgressBar</option>
+              </select>
+            </div>
+            <div class="sandbox-row">
+              <label>svgColor</label>
+              <input type="color" id="box-svgcolor" value="#029eff" />
+            </div>
+            <div class="sandbox-row">
+              <label>svgSize w</label>
+              <input
+                type="number"
+                id="box-svgw"
+                value="40"
+                placeholder="width"
+              />
+            </div>
+            <div class="sandbox-row">
+              <label>svgSize h</label>
+              <input
+                type="number"
+                id="box-svgh"
+                value="40"
+                placeholder="height"
+              />
+            </div>
+          </div>
+          <div class="sandbox-actions">
+            <button class="pri" onclick="runBoxSandbox()">Run Box</button>
+            <button
+              class="dan"
+              onclick="
+                Fnon.Box.Remove(
+                  document.getElementById('box-selector').value ||
+                    '#box-target',
+                )
+              "
+            >
+              Remove Box
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ══════════════════════════ ALERT ══════════════════════════ -->
+      <section id="alert">
+        <h2>
+          4. Alert
+          <span class="badge"
+            >Fnon.Alert.Theme(msg, title?, btnOkText?, callback?)</span
+          >
+        </h2>
+        <p class="section-desc">
+          A one-button modal for simple messages. Supports both positional args
+          and a single options object.
+        </p>
+
+        <div class="demo-grid">
+          <div class="demo-card">
+            <div class="card-body">
+              <h3>String message</h3>
+              <p class="desc">
+                Three positional args: message, title, button text.
+              </p>
+              <div class="card-actions">
+                <button
+                  class="pri"
+                  onclick="
+                    Fnon.Alert.Primary('Hello from Fnon!', 'Greeting', 'OK')
+                  "
+                >
+                  Primary
+                </button>
+                <button
+                  class="suc"
+                  onclick="Fnon.Alert.Success('Saved!', 'Success', 'OK')"
+                >
+                  Success
+                </button>
+                <button
+                  class="dan"
+                  onclick="Fnon.Alert.Danger('Error!', 'Error', 'OK')"
+                >
+                  Danger
+                </button>
+              </div>
+            </div>
+            <div class="code">
+              <span class="kw">Fnon</span>.Alert.Primary(<span class="str"
+                >'Hello!'</span
+              >, <span class="str">'Title'</span>,
+              <span class="str">'OK'</span>)
+            </div>
+          </div>
+
+          <div class="demo-card">
+            <div class="card-body">
+              <h3>Object args</h3>
+              <p class="desc">
+                Access every option by passing a single object.
+              </p>
+              <div class="card-actions">
+                <button
+                  class="pri"
+                  onclick="
+                    Fnon.Alert.Primary({
+                      message: 'Object mode!',
+                      title: 'Object Args',
+                      btnOkText: 'Got it',
+                      width: 'sm',
+                    })
+                  "
+                >
+                  sm object
+                </button>
+                <button
+                  class="suc"
+                  onclick="
+                    Fnon.Alert.Success({
+                      message: 'Wide modal',
+                      title: 'Wide',
+                      width: 'xl',
+                      closeButton: false,
+                    })
+                  "
+                >
+                  xl, no close
+                </button>
+              </div>
+            </div>
+            <div class="code">
+              <span class="kw">Fnon</span>.Alert.Primary({
+              <span class="str">message</span>:
+              <span class="str">'Object mode!'</span>,
+              <span class="str">width</span>: <span class="str">'sm'</span> })
+            </div>
+          </div>
+
+          <div class="demo-card">
+            <div class="card-body">
+              <h3>delButtons + autoFocus</h3>
+              <p class="desc">
+                <code>delButtons: true</code> removes footer.
+                <code>autoFocus: true</code> highlights the button.
+              </p>
+              <div class="card-actions">
+                <button
+                  onclick="
+                    Fnon.Alert.Primary({
+                      message: 'No footer buttons',
+                      title: 'No Buttons',
+                      delButtons: true,
+                    })
+                  "
+                >
+                  delButtons
+                </button>
+                <button
+                  class="pri"
+                  onclick="
+                    Fnon.Alert.Primary({
+                      message: 'Button auto-focused',
+                      autoFocus: true,
+                    })
+                  "
+                >
+                  autoFocus
+                </button>
+              </div>
+            </div>
+            <div class="code">
+              <span class="kw">Fnon</span>.Alert.Primary({
+              <span class="str">delButtons</span>:
+              <span class="pr">true</span> })
+            </div>
+          </div>
+
+          <div class="demo-card">
+            <div class="card-body">
+              <h3>Button styling overrides</h3>
+              <p class="desc">
+                Custom colors, background, shadow, border for the OK button.
+              </p>
+              <div class="card-actions">
+                <button
+                  onclick="
+                    Fnon.Alert.Primary({
+                      message: 'Styled!',
+                      btnOkColor: '#fff',
+                      btnOkBackground: '#6c5ce7',
+                      btnOkShadow: '0 4px 12px rgba(108,92,231,.4)',
+                    })
+                  "
+                >
+                  Styled
+                </button>
+              </div>
+            </div>
+            <div class="code">
+              <span class="kw">Fnon</span>.Alert.Primary({
+              <span class="str">btnOkColor</span>:
+              <span class="str">'#fff'</span>,
+              <span class="str">btnOkBackground</span>:
+              <span class="str">'#6c5ce7'</span> })
+            </div>
+          </div>
+
+          <div class="demo-card">
+            <div class="card-body">
+              <h3>.Async + .Init</h3>
+              <p class="desc">
+                <code>.Async</code> returns a Promise. <code>.Init</code> sets
+                global defaults.
+              </p>
+              <div class="card-actions">
+                <button
+                  class="pri"
+                  onclick="
+                    (async () => {
+                      await Fnon.Alert.Primary.Async(
+                        'Promise resolved!',
+                        'Async',
+                      );
+                      Fnon.Hint.Success('Resolved!');
+                    })()
+                  "
+                >
+                  Alert.Async
+                </button>
+                <button
+                  onclick="
+                    Fnon.Alert.Init({ btnOkText: 'Got it!' });
+                    Fnon.Alert.Primary('Button changed!', '.Init');
+                  "
+                >
+                  Apply .Init
+                </button>
+                <button
+                  onclick="
+                    Fnon.Alert.Init({ btnOkText: void 0 });
+                    Fnon.Hint.Info('Reset');
+                  "
+                >
+                  Reset
+                </button>
+              </div>
+            </div>
+            <div class="code">
+              <span class="kw">await</span>
+              <span class="kw">Fnon</span>.Alert.Primary.<span class="fn"
+                >Async</span
+              >(<span class="str">'msg'</span>,
+              <span class="str">'title'</span>)
+            </div>
+          </div>
+        </div>
+
+        <div class="ref-section">
+          <h3>Alert — common ModalOptions</h3>
+          <table class="ref-table">
+            <tr>
+              <th>Option</th>
+              <th>Default</th>
+              <th>Type</th>
+              <th>Description</th>
+            </tr>
+            <tr>
+              <td>message</td>
+              <td>—</td>
+              <td>string | HTMLElement | VNode</td>
+              <td>Body content</td>
+            </tr>
+            <tr>
+              <td>title</td>
+              <td>—</td>
+              <td>string</td>
+              <td>Dialog title</td>
+            </tr>
+            <tr>
+              <td>btnOkText</td>
+              <td>'OK'</td>
+              <td>string</td>
+              <td>OK button label</td>
+            </tr>
+            <tr>
+              <td>width</td>
+              <td>—</td>
+              <td>'sm' | 'lg' | 'xl' | 'fl'</td>
+              <td>Width mode (360/640/800/full px)</td>
+            </tr>
+            <tr>
+              <td>closeButton</td>
+              <td>true</td>
+              <td>boolean</td>
+              <td>Show/hide X button</td>
+            </tr>
+            <tr>
+              <td>showClose</td>
+              <td>—</td>
+              <td>boolean</td>
+              <td>Alias for closeButton</td>
+            </tr>
+            <tr>
+              <td>delButtons</td>
+              <td>false</td>
+              <td>boolean</td>
+              <td>Remove all footer buttons</td>
+            </tr>
+            <tr>
+              <td>autoFocus</td>
+              <td>false</td>
+              <td>boolean</td>
+              <td>Auto-focus first matching element</td>
+            </tr>
+            <tr>
+              <td>autoFocusTag</td>
+              <td>'input:not([disabled])'</td>
+              <td>selector</td>
+              <td>Focus target selector</td>
+            </tr>
+            <tr>
+              <td>fontFamily</td>
+              <td>'Quicksand', sans-serif</td>
+              <td>string</td>
+              <td>CSS font-family</td>
+            </tr>
+            <tr>
+              <td>animation</td>
+              <td>'slide-top'</td>
+              <td>string</td>
+              <td>CSS animation class</td>
+            </tr>
+            <tr>
+              <td>color</td>
+              <td>'#2b2b2b'</td>
+              <td>color</td>
+              <td>Body text color</td>
+            </tr>
+            <tr>
+              <td>background</td>
+              <td>'rgba(0,0,0,0.4)'</td>
+              <td>color</td>
+              <td>Overlay background</td>
+            </tr>
+            <tr>
+              <td>titleColor</td>
+              <td>—</td>
+              <td>color</td>
+              <td>Title text color</td>
+            </tr>
+            <tr>
+              <td>titleBackground</td>
+              <td>—</td>
+              <td>color</td>
+              <td>Title bar background</td>
+            </tr>
+            <tr>
+              <td>zIndex</td>
+              <td>4000</td>
+              <td>number</td>
+              <td>Overlay z-index</td>
+            </tr>
+            <tr>
+              <td>showIcon</td>
+              <td>false</td>
+              <td>boolean</td>
+              <td>Show an icon in the body</td>
+            </tr>
+            <tr>
+              <td>data</td>
+              <td>—</td>
+              <td>object</td>
+              <td>Shared mutable data for lifecycle callbacks</td>
+            </tr>
+            <tr>
+              <td>onOpen</td>
+              <td>—</td>
+              <td>(el,data)=>void</td>
+              <td>After modal opens</td>
+            </tr>
+            <tr>
+              <td>onClose</td>
+              <td>—</td>
+              <td>(data)=>void</td>
+              <td>When modal closes</td>
+            </tr>
+            <tr>
+              <td>onInit</td>
+              <td>—</td>
+              <td>(el,data)=>void</td>
+              <td>After element built, before DOM append</td>
+            </tr>
+            <tr>
+              <td>onClosed</td>
+              <td>—</td>
+              <td>(data)=>void</td>
+              <td>After modal fully removed</td>
+            </tr>
+          </table>
+        </div>
+
+        <p style="font-size: 0.82rem; color: #718096; margin: 0.5rem 0">
+          <strong>Async:</strong>
+          <code>Fnon.Alert.Theme.Async(message, title?, btnOkText?)</code>
+          returns <code>Promise&lt;void&gt;</code> that resolves when OK is
+          clicked or the modal is closed.
+        </p>
+
+        <div class="sandbox">
+          <h3>Sandbox &mdash; Alert</h3>
+          <p>Configure and launch an Alert modal.</p>
+          <div class="sandbox-grid">
+            <div class="sandbox-row">
+              <label>Message</label>
+              <input
+                type="text"
+                id="alert-msg"
+                value="Hello from the sandbox!"
+              />
+            </div>
+            <div class="sandbox-row">
+              <label>Title</label>
+              <input type="text" id="alert-title" value="Alert Sandbox" />
+            </div>
+            <div class="sandbox-row">
+              <label>btnOkText</label>
+              <input type="text" id="alert-btnok" value="OK" />
+            </div>
+            <div class="sandbox-row">
+              <label>Theme</label>
+              <select id="alert-theme">
+                <option>Primary</option>
+                <option>Success</option>
+                <option>Warning</option>
+                <option>Danger</option>
+                <option>Info</option>
+                <option>Light</option>
+                <option>Dark</option>
+              </select>
+            </div>
+            <div class="sandbox-row">
+              <label>Width</label>
+              <select id="alert-width">
+                <option value="">Normal</option>
+                <option>sm</option>
+                <option>lg</option>
+                <option>xl</option>
+                <option>fl</option>
+              </select>
+            </div>
+            <div class="sandbox-row">
+              <label>Font family</label>
+              <input
+                type="text"
+                id="alert-fontfamily"
+                value="'Quicksand', sans-serif"
+              />
+            </div>
+            <div class="sandbox-row">
+              <div class="chk-row">
+                <input type="checkbox" id="alert-showclose" checked /><label
+                  for="alert-showclose"
+                  >Show close button</label
+                >
+              </div>
+            </div>
+            <div class="sandbox-row">
+              <div class="chk-row">
+                <input type="checkbox" id="alert-autofocus" /><label
+                  for="alert-autofocus"
+                  >Auto-focus</label
+                >
+              </div>
+            </div>
+          </div>
+          <div class="sandbox-actions">
+            <button class="pri" onclick="runAlertSandbox()">Run Alert</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ══════════════════════════ ASK ══════════════════════════ -->
+      <section id="ask">
+        <h2>
+          5. Ask
+          <span class="badge"
+            >Fnon.Ask.Theme(msg, title?, okText?, cancelText?, callback?)</span
+          >
+        </h2>
+        <p class="section-desc">
+          A two-button confirm modal (OK / Cancel). The callback receives
+          <code>true</code> or <code>false</code>. Supports object args and
+          async.
+        </p>
+
+        <div class="demo-grid">
+          <div class="demo-card">
+            <div class="card-body">
+              <h3>Positional args</h3>
+              <p class="desc">
+                message, title, OK text, Cancel text, callback(result).
+              </p>
+              <div class="card-actions">
+                <button
+                  class="pri"
+                  onclick="
+                    Fnon.Ask.Primary('Proceed?', 'Confirm', 'Yes', 'No', (r) =>
+                      Fnon.Hint.Primary(r ? 'Yes' : 'No'),
+                    )
+                  "
+                >
+                  Primary
+                </button>
+                <button
+                  class="dan"
+                  onclick="
+                    Fnon.Ask.Danger(
+                      'Delete file?',
+                      'Delete',
+                      'Delete',
+                      'Keep',
+                      (r) => Fnon.Hint.Danger(r ? 'Deleted' : 'Kept'),
+                    )
+                  "
+                >
+                  Danger
+                </button>
+              </div>
+            </div>
+            <div class="code">
+              <span class="kw">Fnon</span>.Ask.Primary(<span class="str"
+                >'Proceed?'</span
+              >, <span class="str">'Confirm'</span>,
+              <span class="str">'Yes'</span>, <span class="str">'No'</span>, r
+              => {})
+            </div>
+          </div>
+
+          <div class="demo-card">
+            <div class="card-body">
+              <h3>Object args</h3>
+              <p class="desc">Pass a single options object for full control.</p>
+              <div class="card-actions">
+                <button
+                  class="pri"
+                  onclick="
+                    Fnon.Ask.Primary({
+                      message: 'Object mode!',
+                      btnOkText: 'Sure',
+                      btnCancelText: 'Nah',
+                    })
+                  "
+                >
+                  Object
+                </button>
+              </div>
+            </div>
+            <div class="code">
+              <span class="kw">Fnon</span>.Ask.Primary({
+              <span class="str">message</span>:
+              <span class="str">'Object mode!'</span>,
+              <span class="str">btnOkText</span>:
+              <span class="str">'Sure'</span> })
+            </div>
+          </div>
+
+          <div class="demo-card">
+            <div class="card-body">
+              <h3>Button styling overrides</h3>
+              <p class="desc">Custom colors for both OK and Cancel buttons.</p>
+              <div class="card-actions">
+                <button
+                  onclick="
+                    Fnon.Ask.Primary({
+                      message: 'Styled!',
+                      btnOkColor: '#fff',
+                      btnOkBackground: '#6c5ce7',
+                      btnOkShadow: '0 4px 12px rgba(108,92,231,.4)',
+                      btnCancelColor: '#fff',
+                      btnCancelBackground: '#e17055',
+                    })
+                  "
+                >
+                  Styled
+                </button>
+              </div>
+            </div>
+            <div class="code">
+              <span class="kw">Fnon</span>.Ask.Primary({
+              <span class="str">btnOkColor</span>:
+              <span class="str">'#fff'</span>,
+              <span class="str">btnOkBackground</span>:
+              <span class="str">'#6c5ce7'</span> })
+            </div>
+          </div>
+
+          <div class="demo-card">
+            <div class="card-body">
+              <h3>.Async + .Init</h3>
+              <p class="desc">
+                <code>.Async</code> resolves <code>true</code> or
+                <code>false</code>. <code>.Init</code> sets global defaults.
+              </p>
+              <div class="card-actions">
+                <button
+                  class="pri"
+                  onclick="
+                    (async () => {
+                      let r = await Fnon.Ask.Primary.Async(
+                        'Continue?',
+                        'Async',
+                        'Yes',
+                        'No',
+                      );
+                      Fnon.Hint.Primary(r ? 'Yes' : 'No');
+                    })()
+                  "
+                >
+                  Ask.Async
+                </button>
+                <button
+                  onclick="
+                    Fnon.Ask.Init({ btnOkText: 'Sure' });
+                    Fnon.Ask.Primary('Button changed!');
+                  "
+                >
+                  Apply .Init
+                </button>
+                <button
+                  onclick="
+                    Fnon.Ask.Init({ btnOkText: void 0 });
+                    Fnon.Hint.Info('Reset');
+                  "
+                >
+                  Reset
+                </button>
+              </div>
+            </div>
+            <div class="code">
+              <span class="kw">let</span> r = <span class="kw">await</span>
+              <span class="kw">Fnon</span>.Ask.Primary.<span class="fn"
+                >Async</span
+              >(<span class="str">'Continue?'</span>)
+            </div>
+          </div>
+        </div>
+
+        <div class="ref-section">
+          <h3>Ask — common ModalOptions</h3>
+          <table class="ref-table">
+            <tr>
+              <th>Option</th>
+              <th>Default</th>
+              <th>Type</th>
+              <th>Description</th>
+            </tr>
+            <tr>
+              <td>message</td>
+              <td>—</td>
+              <td>string | HTMLElement | VNode</td>
+              <td>Body content</td>
+            </tr>
+            <tr>
+              <td>title</td>
+              <td>—</td>
+              <td>string</td>
+              <td>Dialog title</td>
+            </tr>
+            <tr>
+              <td>btnOkText</td>
+              <td>'OK'</td>
+              <td>string</td>
+              <td>OK button label</td>
+            </tr>
+            <tr>
+              <td>btnCancelText</td>
+              <td>'Cancel'</td>
+              <td>string</td>
+              <td>Cancel button label</td>
+            </tr>
+            <tr>
+              <td>width</td>
+              <td>—</td>
+              <td>'sm' | 'lg' | 'xl' | 'fl'</td>
+              <td>Width mode</td>
+            </tr>
+            <tr>
+              <td>closeButton</td>
+              <td>true</td>
+              <td>boolean</td>
+              <td>Show/hide X button</td>
+            </tr>
+            <tr>
+              <td>showClose</td>
+              <td>—</td>
+              <td>boolean</td>
+              <td>Alias for closeButton</td>
+            </tr>
+            <tr>
+              <td>autoFocus</td>
+              <td>false</td>
+              <td>boolean</td>
+              <td>Auto-focus first matching element</td>
+            </tr>
+            <tr>
+              <td>fontFamily</td>
+              <td>'Quicksand', sans-serif</td>
+              <td>string</td>
+              <td>CSS font-family</td>
+            </tr>
+            <tr>
+              <td>color</td>
+              <td>'#2b2b2b'</td>
+              <td>color</td>
+              <td>Body text color</td>
+            </tr>
+            <tr>
+              <td>btnOkColor</td>
+              <td>—</td>
+              <td>color</td>
+              <td>OK button text color</td>
+            </tr>
+            <tr>
+              <td>btnOkBackground</td>
+              <td>—</td>
+              <td>color</td>
+              <td>OK button background</td>
+            </tr>
+            <tr>
+              <td>btnOkShadow</td>
+              <td>—</td>
+              <td>string</td>
+              <td>OK button box-shadow</td>
+            </tr>
+            <tr>
+              <td>btnCancelColor</td>
+              <td>—</td>
+              <td>color</td>
+              <td>Cancel button text color</td>
+            </tr>
+            <tr>
+              <td>btnCancelBackground</td>
+              <td>—</td>
+              <td>color</td>
+              <td>Cancel button background</td>
+            </tr>
+          </table>
+        </div>
+
+        <p style="font-size: 0.82rem; color: #718096; margin: 0.5rem 0">
+          <strong>Async:</strong>
+          <code
+            >Fnon.Ask.Theme.Async(message, title?, okText?, cancelText?)</code
+          >
+          returns <code>Promise&lt;boolean&gt;</code> — <code>true</code> on OK,
+          <code>false</code> on Cancel or close.
+        </p>
+
+        <div class="sandbox">
+          <h3>Sandbox &mdash; Ask</h3>
+          <p>Configure and launch a confirmation modal.</p>
+          <div class="sandbox-grid">
+            <div class="sandbox-row">
+              <label>Message</label>
+              <input
+                type="text"
+                id="ask-msg"
+                value="Proceed with this action?"
+              />
+            </div>
+            <div class="sandbox-row">
+              <label>Title</label>
+              <input type="text" id="ask-title" value="Confirm" />
+            </div>
+            <div class="sandbox-row">
+              <label>btnOkText</label>
+              <input type="text" id="ask-btnok" value="Yes" />
+            </div>
+            <div class="sandbox-row">
+              <label>btnCancelText</label>
+              <input type="text" id="ask-btncancel" value="No" />
+            </div>
+            <div class="sandbox-row">
+              <label>Theme</label>
+              <select id="ask-theme">
+                <option>Primary</option>
+                <option>Success</option>
+                <option>Warning</option>
+                <option>Danger</option>
+                <option>Info</option>
+                <option>Light</option>
+                <option>Dark</option>
+              </select>
+            </div>
+            <div class="sandbox-row">
+              <label>Width</label>
+              <select id="ask-width">
+                <option value="">Normal</option>
+                <option>sm</option>
+                <option>lg</option>
+                <option>xl</option>
+                <option>fl</option>
+              </select>
+            </div>
+            <div class="sandbox-row">
+              <div class="chk-row">
+                <input type="checkbox" id="ask-showclose" checked /><label
+                  for="ask-showclose"
+                  >Show close button</label
+                >
+              </div>
+            </div>
+          </div>
+          <div class="sandbox-actions">
+            <button class="pri" onclick="runAskSandbox()">Run Ask</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ══════════════════════════ DIALOGUE ══════════════════════════ -->
+      <section id="dialogue">
+        <h2>
+          6. Dialogue
+          <span class="badge"
+            >Fnon.Dialogue(opts) · Fnon.Dialogue.Theme(...)</span
+          >
+        </h2>
+        <p class="section-desc">
+          The most flexible modal. Custom buttons, full lifecycle hooks,
+          minimize/maximize, drag, and raw options control.
+        </p>
+
+        <div class="demo-grid">
+          <div class="demo-card">
+            <div class="card-body">
+              <h3>Custom buttons</h3>
+              <p class="desc">
+                Define buttons with text, style, and callback. Callback receives
+                <code>close()</code>.
+              </p>
+              <div class="card-actions">
+                <button
+                  class="pri"
+                  onclick="
+                    Fnon.Dialogue({
+                      message: 'Two custom buttons',
+                      title: 'Dialogue',
+                      buttons: [
+                        {
+                          text: 'Save',
+                          style: 'Success',
+                          callback: (c) => {
+                            Fnon.Hint.Success('Saved!');
+                            c();
+                          },
+                        },
+                        {
+                          text: 'Cancel',
+                          style: 'Light',
+                          callback: (c) => {
+                            Fnon.Hint.Light('Cancelled');
+                            c();
+                          },
+                        },
+                      ],
+                    })
+                  "
+                >
+                  Custom Btns
+                </button>
+              </div>
+            </div>
+            <div class="code">
+              <span class="kw">Fnon</span>.Dialogue({
+              <span class="str">buttons</span>: [{
+              <span class="str">text</span>: <span class="str">'Save'</span>,
+              <span class="fn">callback</span>: c => c() }] })
+            </div>
+          </div>
+
+          <div class="demo-card">
+            <div class="card-body">
+              <h3>Themed shortcut + prevent close</h3>
+              <p class="desc">
+                Positional shortcut: msg, title, OK, Cancel, callback(close,
+                html). Return <code>false</code> to stay open.
+              </p>
+              <div class="card-actions">
+                <button
+                  class="pri"
+                  onclick="
+                    Fnon.Dialogue.Primary(
+                      'Shortcut!',
+                      'Dialogue',
+                      'OK',
+                      'Cancel',
+                      (c) => {
+                        Fnon.Hint.Success('OK!');
+                        c();
+                      },
+                    )
+                  "
+                >
+                  Positional
+                </button>
+                <button
+                  class="dan"
+                  onclick="
+                    Fnon.Dialogue({
+                      message: 'Return false to stay open',
+                      title: 'Prevent',
+                      buttons: [
+                        {
+                          text: 'Stay open',
+                          style: 'Danger',
+                          callback: () => {
+                            Fnon.Hint.Warning('Prevented!');
+                            return false;
+                          },
+                        },
+                        {
+                          text: 'Close',
+                          style: 'Primary',
+                          callback: (c) => c(),
+                        },
+                      ],
+                    })
+                  "
+                >
+                  Prevent Close
+                </button>
+              </div>
+            </div>
+            <div class="code">
+              <span class="cm">// Return false to prevent close</span
+              ><br />callback: (c, html) => { <span class="kw">return</span>
+              <span class="pr">false</span> }
+            </div>
+          </div>
+
+          <div class="demo-card">
+            <div class="card-body">
+              <h3>Minimize / Maximize</h3>
+              <p class="desc">
+                <code>showMin</code> and <code>showMaxMin</code> add window
+                controls to the title bar. Minimized modals go to a task bar.
+              </p>
+              <div class="card-actions">
+                <button
+                  onclick="
+                    Fnon.Dialogue({
+                      message: 'Click _ to minimize, ⛶ to maximize',
+                      title: 'Min/Max',
+                      showMin: true,
+                      showMaxMin: true,
+                      buttons: [
+                        { text: 'OK', style: 'Primary', callback: (c) => c() },
+                      ],
+                    })
+                  "
+                >
+                  Open
+                </button>
+              </div>
+            </div>
+            <div class="code">
+              <span class="kw">Fnon</span>.Dialogue({
+              <span class="str">showMin</span>: <span class="pr">true</span>,
+              <span class="str">showMaxMin</span>:
+              <span class="pr">true</span> })
+            </div>
+          </div>
+
+          <div class="demo-card">
+            <div class="card-body">
+              <h3>Lifecycle hooks + data</h3>
+              <p class="desc">
+                onInit → beforeShow → afterShow → onOpen → onClosing → onClose →
+                onClosed. All receive <code>(el, data)</code>.
+              </p>
+              <div class="card-actions">
+                <button
+                  class="pri"
+                  onclick="
+                    Fnon.Dialogue({
+                      message: 'Watch console',
+                      title: 'Lifecycle',
+                      onInit: (el, d) => console.log('1 onInit', d),
+                      beforeShow: (el, d) => console.log('2 beforeShow', d),
+                      afterShow: (el, d) => console.log('3 afterShow', d),
+                      onOpen: (el, d) => console.log('4 onOpen', d),
+                      onClosing: (el, d) => console.log('5 onClosing', d),
+                      onClose: (d) => console.log('6 onClose', d),
+                      onClosed: (d) => console.log('7 onClosed', d),
+                    })
+                  "
+                >
+                  Lifecycle Demo
+                </button>
+              </div>
+            </div>
+            <div class="code">
+              <span class="kw">Fnon</span>.Dialogue({
+              <span class="str">onInit</span>: (el, data) => {},
+              <span class="str">onOpen</span>: (el, data) => {} })
+            </div>
+          </div>
+
+          <div class="demo-card">
+            <div class="card-body">
+              <h3>Custom styling + drag</h3>
+              <p class="desc">
+                Override colors, font, width. All modals are draggable by the
+                title bar.
+              </p>
+              <div class="card-actions">
+                <button
+                  onclick="
+                    Fnon.Dialogue({
+                      message: 'Drag me!',
+                      title: 'Styled',
+                      width: 'sm',
+                      titleColor: '#fff',
+                      titleBackground: '#6c5ce7',
+                      color: '#2d3748',
+                      fontFamily: 'monospace',
+                    })
+                  "
+                >
+                  Styled
+                </button>
+                <button
+                  onclick="
+                    Fnon.Dialogue({
+                      message: 'Full width',
+                      title: 'Full',
+                      width: 'fl',
+                      showClose: false,
+                      delButtons: true,
+                    })
+                  "
+                >
+                  Full width
+                </button>
+              </div>
+            </div>
+            <div class="code">
+              <span class="kw">Fnon</span>.Dialogue({
+              <span class="str">titleColor</span>:
+              <span class="str">'#fff'</span>, <span class="str">width</span>:
+              <span class="str">'sm'</span> })
+            </div>
+          </div>
+        </div>
+
+        <div class="ref-section">
+          <h3>Dialogue — ModalOptions (full reference)</h3>
+          <table class="ref-table">
+            <tr>
+              <th>Option</th>
+              <th>Default</th>
+              <th>Type</th>
+              <th>Description</th>
+            </tr>
+            <tr>
+              <td>message</td>
+              <td>—</td>
+              <td>string | HTMLElement | VNode</td>
+              <td>Body content</td>
+            </tr>
+            <tr>
+              <td>title</td>
+              <td>—</td>
+              <td>string</td>
+              <td>Dialog title</td>
+            </tr>
+            <tr>
+              <td>buttons</td>
+              <td>—</td>
+              <td>ButtonDef[]</td>
+              <td>Custom button definitions</td>
+            </tr>
+            <tr>
+              <td>width</td>
+              <td>—</td>
+              <td>'sm' | 'lg' | 'xl' | 'fl'</td>
+              <td>Width mode</td>
+            </tr>
+            <tr>
+              <td>layout</td>
+              <td>'hbf'</td>
+              <td>string</td>
+              <td>Order of header/body/footer</td>
+            </tr>
+            <tr>
+              <td>closeButton</td>
+              <td>true</td>
+              <td>boolean</td>
+              <td>Show/hide X button</td>
+            </tr>
+            <tr>
+              <td>showClose</td>
+              <td>—</td>
+              <td>boolean</td>
+              <td>Alias for closeButton</td>
+            </tr>
+            <tr>
+              <td>showMin</td>
+              <td>false</td>
+              <td>boolean</td>
+              <td>Show minimize button</td>
+            </tr>
+            <tr>
+              <td>showMaxMin</td>
+              <td>false</td>
+              <td>boolean</td>
+              <td>Show maximize button</td>
+            </tr>
+            <tr>
+              <td>delButtons</td>
+              <td>false</td>
+              <td>boolean</td>
+              <td>Remove all footer buttons</td>
+            </tr>
+            <tr>
+              <td>autoFocus</td>
+              <td>false</td>
+              <td>boolean</td>
+              <td>Auto-focus first input</td>
+            </tr>
+            <tr>
+              <td>fontFamily</td>
+              <td>'Quicksand', sans-serif</td>
+              <td>string</td>
+              <td>CSS font-family</td>
+            </tr>
+            <tr>
+              <td>animation</td>
+              <td>'slide-top'</td>
+              <td>string</td>
+              <td>CSS animation class</td>
+            </tr>
+            <tr>
+              <td>data</td>
+              <td>—</td>
+              <td>object</td>
+              <td>Shared mutable data for all lifecycle hooks</td>
+            </tr>
+            <tr>
+              <td>color</td>
+              <td>'#2b2b2b'</td>
+              <td>color</td>
+              <td>Body text color</td>
+            </tr>
+            <tr>
+              <td>background</td>
+              <td>'rgba(0,0,0,0.4)'</td>
+              <td>color</td>
+              <td>Overlay background</td>
+            </tr>
+            <tr>
+              <td>titleColor</td>
+              <td>—</td>
+              <td>color</td>
+              <td>Title text color</td>
+            </tr>
+            <tr>
+              <td>titleBackground</td>
+              <td>—</td>
+              <td>color</td>
+              <td>Title bar background</td>
+            </tr>
+            <tr>
+              <td>zIndex</td>
+              <td>4000</td>
+              <td>number</td>
+              <td>Overlay z-index</td>
+            </tr>
+            <tr>
+              <td>appendTarget</td>
+              <td>'body'</td>
+              <td>string | HTMLElement</td>
+              <td>Mount container</td>
+            </tr>
+            <tr>
+              <td>onInit</td>
+              <td>—</td>
+              <td>(el,data)=>void</td>
+              <td>After element built</td>
+            </tr>
+            <tr>
+              <td>beforeShow</td>
+              <td>—</td>
+              <td>(el,data)=>void</td>
+              <td>Before DOM append</td>
+            </tr>
+            <tr>
+              <td>afterShow</td>
+              <td>—</td>
+              <td>(el,data)=>void</td>
+              <td>After DOM append</td>
+            </tr>
+            <tr>
+              <td>onOpen</td>
+              <td>—</td>
+              <td>(el,data)=>void</td>
+              <td>After modal opens</td>
+            </tr>
+            <tr>
+              <td>onClosing</td>
+              <td>—</td>
+              <td>(el,data)=>void</td>
+              <td>When modal starts closing</td>
+            </tr>
+            <tr>
+              <td>onClose</td>
+              <td>—</td>
+              <td>(data)=>void</td>
+              <td>During close animation</td>
+            </tr>
+            <tr>
+              <td>onClosed</td>
+              <td>—</td>
+              <td>(data)=>void</td>
+              <td>After modal fully removed</td>
+            </tr>
+          </table>
+        </div>
+
+        <p style="font-size: 0.82rem; color: #718096; margin: 0.5rem 0">
+          <strong>Async:</strong>
+          <code
+            >Fnon.Dialogue.Theme.Async(message, title?, okText?,
+            cancelText?)</code
+          >
+          returns <code>Promise&lt;boolean | null&gt;</code> —
+          <code>true</code> on OK, <code>false</code> on Cancel,
+          <code>null</code> on close/X.
+        </p>
+
+        <div class="sandbox">
+          <h3>Sandbox &mdash; Dialogue</h3>
+          <p>Configure a modal with the most common options.</p>
+          <div class="sandbox-grid">
+            <div class="sandbox-row">
+              <label>Message</label>
+              <input type="text" id="dlg-msg" value="Custom dialogue message" />
+            </div>
+            <div class="sandbox-row">
+              <label>Title</label>
+              <input type="text" id="dlg-title" value="Dialogue Sandbox" />
+            </div>
+            <div class="sandbox-row">
+              <label>Theme</label>
+              <select id="dlg-theme">
+                <option>Primary</option>
+                <option>Success</option>
+                <option>Warning</option>
+                <option>Danger</option>
+                <option>Info</option>
+                <option>Light</option>
+                <option>Dark</option>
+              </select>
+            </div>
+            <div class="sandbox-row">
+              <label>Width</label>
+              <select id="dlg-width">
+                <option value="">Normal</option>
+                <option>sm</option>
+                <option>lg</option>
+                <option>xl</option>
+                <option>fl</option>
+              </select>
+            </div>
+            <div class="sandbox-row">
+              <label>Layout</label>
+              <input type="text" id="dlg-layout" value="hbf" />
+            </div>
+            <div class="sandbox-row">
+              <label>Font family</label>
+              <input
+                type="text"
+                id="dlg-fontfamily"
+                value="'Quicksand', sans-serif"
+              />
+            </div>
+            <div class="sandbox-row">
+              <div class="chk-row">
+                <input type="checkbox" id="dlg-showclose" checked /><label
+                  for="dlg-showclose"
+                  >Show close button</label
+                >
+              </div>
+            </div>
+            <div class="sandbox-row">
+              <div class="chk-row">
+                <input type="checkbox" id="dlg-showmin" /><label
+                  for="dlg-showmin"
+                  >Show minimize button</label
+                >
+              </div>
+            </div>
+            <div class="sandbox-row">
+              <div class="chk-row">
+                <input type="checkbox" id="dlg-showmaxmin" /><label
+                  for="dlg-showmaxmin"
+                  >Show maximize button</label
+                >
+              </div>
+            </div>
+            <div class="sandbox-row">
+              <div class="chk-row">
+                <input type="checkbox" id="dlg-autofocus" /><label
+                  for="dlg-autofocus"
+                  >Auto-focus</label
+                >
+              </div>
+            </div>
+          </div>
+          <div class="sandbox-actions">
+            <button class="pri" onclick="runDialogueSandbox()">
+              Run Dialogue
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ══════════════════════════ BREAKING ══════════════════════════ -->
+      <section id="breaking">
+        <h2>
+          7. Breaking
+          <span class="badge"
+            >Fnon.Breaking(opts) · Fnon.Breaking.Theme(headline?)</span
+          >
+        </h2>
+        <p class="section-desc">
+          Full-width notification bar anchored to top or bottom. Auto-dismisses
+          after 5 seconds. Supports custom buttons and headlines.
+        </p>
+
+        <div class="demo-grid">
+          <div class="demo-card">
+            <div class="card-body">
+              <h3>Themed shortcuts</h3>
+              <p class="desc">
+                One arg: <code>Fnon.Breaking.Theme(headline)</code>.
+                Auto-dismisses after 5s.
+              </p>
+              <div class="card-actions">
+                <button
+                  class="dan"
+                  onclick="Fnon.Breaking.Danger('Breaking news')"
+                >
+                  Danger
+                </button>
+                <button
+                  class="suc"
+                  onclick="Fnon.Breaking.Success('Good news!')"
+                >
+                  Success
+                </button>
+                <button class="war" onclick="Fnon.Breaking.Warning('Heads up')">
+                  Warning
+                </button>
+                <button class="pri" onclick="Fnon.Breaking.Primary('Notice')">
+                  Primary
+                </button>
+              </div>
+            </div>
+            <div class="code">
+              <span class="kw">Fnon</span>.Breaking.Danger(<span class="str"
+                >'Breaking news'</span
+              >)
+            </div>
+          </div>
+
+          <div class="demo-card">
+            <div class="card-body">
+              <h3>Full options + bottom anchor</h3>
+              <p class="desc">
+                headline, message, theme, anchor, buttons, timeout, closable,
+                onClose.
+              </p>
+              <div class="card-actions">
+                <button
+                  onclick="
+                    Fnon.Breaking({
+                      headline: 'BOTTOM',
+                      message: 'Bottom anchored!',
+                      anchor: 'bottom',
+                      theme: 'Success',
+                      timeout: 4000,
+                    })
+                  "
+                >
+                  Bottom (4s)
+                </button>
+                <button
+                  onclick="
+                    Fnon.Breaking({
+                      headline: 'ACTIONS',
+                      message: 'With buttons',
+                      buttons: [
+                        {
+                          text: 'Click',
+                          style: 'Danger',
+                          callback: (c) => {
+                            Fnon.Hint.Info('Clicked!');
+                          },
+                        },
+                      ],
+                      timeout: 6000,
+                    })
+                  "
+                >
+                  + Buttons (6s)
+                </button>
+              </div>
+            </div>
+            <div class="code">
+              <span class="kw">Fnon</span>.Breaking({
+              <span class="str">headline</span>:
+              <span class="str">'BOTTOM'</span>,
+              <span class="str">anchor</span>:
+              <span class="str">'bottom'</span> })
+            </div>
+          </div>
+
+          <div class="demo-card">
+            <div class="card-body">
+              <h3>.Async + .Init</h3>
+              <p class="desc">
+                <code>.Async</code> resolves when bar closes.
+                <code>.Init</code> changes global defaults.
+              </p>
+              <div class="card-actions">
+                <button
+                  class="pri"
+                  onclick="
+                    (async () => {
+                      await Fnon.Breaking.Danger.Async('Resolved!');
+                      Fnon.Hint.Success('Closed!');
+                    })()
+                  "
+                >
+                  Breaking.Async
+                </button>
+                <button
+                  onclick="
+                    Fnon.Breaking.Init({
+                      headline: 'ALERT',
+                      theme: 'Warning',
+                      timeout: 3000,
+                    });
+                    Fnon.Breaking('Defaults changed!');
+                  "
+                >
+                  Apply .Init
+                </button>
+                <button
+                  onclick="
+                    Fnon.Breaking.Init({
+                      headline: 'BREAKING',
+                      theme: 'Danger',
+                      timeout: 5000,
+                    });
+                    Fnon.Hint.Info('Reset');
+                  "
+                >
+                  Reset
+                </button>
+              </div>
+            </div>
+            <div class="code">
+              <span class="kw">Fnon</span>.Breaking.<span class="fn">Init</span
+              >({ <span class="str">headline</span>:
+              <span class="str">'ALERT'</span> })
+            </div>
+          </div>
+        </div>
+
+        <div class="ref-section">
+          <h3>BreakingOptions</h3>
+          <table class="ref-table">
+            <tr>
+              <th>Option</th>
+              <th>Default</th>
+              <th>Type</th>
+              <th>Description</th>
+            </tr>
+            <tr>
+              <td>headline</td>
+              <td>'BREAKING'</td>
+              <td>string</td>
+              <td>Bold label text</td>
+            </tr>
+            <tr>
+              <td>message</td>
+              <td>—</td>
+              <td>string | HTMLElement</td>
+              <td>Body content</td>
+            </tr>
+            <tr>
+              <td>theme</td>
+              <td>'Danger'</td>
+              <td>ThemeName</td>
+              <td>Color scheme</td>
+            </tr>
+            <tr>
+              <td>anchor</td>
+              <td>'top'</td>
+              <td>'top' | 'bottom'</td>
+              <td>Where the bar attaches</td>
+            </tr>
+            <tr>
+              <td>timeout</td>
+              <td>5000</td>
+              <td>number (ms)</td>
+              <td>Auto-dismiss after N ms</td>
+            </tr>
+            <tr>
+              <td>closable</td>
+              <td>true</td>
+              <td>boolean</td>
+              <td>Show/hide the X button</td>
+            </tr>
+            <tr>
+              <td>buttons</td>
+              <td>—</td>
+              <td>ButtonDef[]</td>
+              <td>Action buttons in the bar</td>
+            </tr>
+            <tr>
+              <td>fontFamily</td>
+              <td>'Quicksand', sans-serif</td>
+              <td>string</td>
+              <td>Font family</td>
+            </tr>
+            <tr>
+              <td>appendTarget</td>
+              <td>'body'</td>
+              <td>string | HTMLElement</td>
+              <td>Mount container</td>
+            </tr>
+            <tr>
+              <td>onClose</td>
+              <td>—</td>
+              <td>() => void</td>
+              <td>Called when bar closes</td>
+            </tr>
+          </table>
+        </div>
+
+        <p style="font-size: 0.82rem; color: #718096; margin: 0.5rem 0">
+          <strong>Async:</strong>
+          <code>Fnon.Breaking.Theme.Async(message?, headline?)</code> returns
+          <code>Promise&lt;void&gt;</code> that resolves when the bar is closed
+          (auto-dismiss or manual).
+        </p>
+
+        <div class="sandbox">
+          <h3>Sandbox &mdash; Breaking</h3>
+          <p>Configure a breaking notification bar.</p>
+          <div class="sandbox-grid">
+            <div class="sandbox-row">
+              <label>Headline</label>
+              <input type="text" id="breaking-headline" value="BREAKING" />
+            </div>
+            <div class="sandbox-row">
+              <label>Message</label>
+              <input
+                type="text"
+                id="breaking-msg"
+                value="This is a breaking notification!"
+              />
+            </div>
+            <div class="sandbox-row">
+              <label>Theme</label>
+              <select id="breaking-theme">
+                <option>Danger</option>
+                <option>Primary</option>
+                <option>Success</option>
+                <option>Warning</option>
+                <option>Info</option>
+                <option>Light</option>
+                <option>Dark</option>
+              </select>
+            </div>
+            <div class="sandbox-row">
+              <label>Anchor</label>
+              <select id="breaking-anchor">
+                <option>top</option>
+                <option>bottom</option>
+              </select>
+            </div>
+            <div class="sandbox-row">
+              <label>Timeout (ms)</label>
+              <input type="number" id="breaking-timeout" value="5000" />
+            </div>
+            <div class="sandbox-row">
+              <div class="chk-row">
+                <input type="checkbox" id="breaking-closable" checked /><label
+                  for="breaking-closable"
+                  >Closable (show X button)</label
+                >
+              </div>
+            </div>
+          </div>
+          <div class="sandbox-actions">
+            <button class="pri" onclick="runBreakingSandbox()">
+              Run Breaking
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── Section 8: DatePicker ── -->
+      <section id="datepicker">
+        <h2>
+          8. DatePicker
+          <span class="badge">Fnon.DatePicker(opts) · Fnon.DP(opts)</span>
+        </h2>
+        <p class="section-desc">
+          A modal date picker with month/year selector, range mode, optional
+          time picker, and min/max constraints. Returns a Promise.
+        </p>
+
+        <div class="demo-grid">
+          <div class="demo-card">
+            <div class="card-body">
+              <h3>Single Date</h3>
+              <p class="desc">
+                Click a date &rarr; resolves immediately. Toggle dark mode first
+                to test dark theme support.
+              </p>
+              <div class="card-actions">
+                <button
+                  class="pri"
+                  onclick="
+                    Fnon.DatePicker({ title: 'Pick a date' })
+                      .then((d) => Fnon.Hint.Success(d.toLocaleDateString()))
+                      .catch(() => Fnon.Hint.Info('Cancelled'))
+                  "
+                >
+                  Pick Date
+                </button>
+                <button
+                  onclick="
+                    Fnon.DatePicker({
+                      withTime: true,
+                      title: 'Select Date & Time',
+                    })
+                      .then((d) => Fnon.Hint.Success(d.toLocaleString()))
+                      .catch(() => Fnon.Hint.Info('Cancelled'))
+                  "
+                >
+                  Date + Time
+                </button>
+              </div>
+            </div>
+            <div class="code">
+              <span class="kw">Fnon</span>.<span class="fn">DatePicker</span>({
+              <span class="str">title</span>:
+              <span class="str">'Pick a date'</span> }) .<span class="fn"
+                >then</span
+              >(<span class="pr">d</span> <span class="kw">=&gt;</span>
+              <span class="fn">console</span>.<span class="fn">log</span>(<span
+                class="pr"
+                >d</span
+              >)) .<span class="fn">catch</span>(()
+              <span class="kw">=&gt;</span>
+              <span class="fn">console</span>.<span class="fn">log</span>(<span
+                class="str"
+                >'cancelled'</span
+              >))
+            </div>
+          </div>
+
+          <div class="demo-card">
+            <div class="card-body">
+              <h3>Date Range</h3>
+              <p class="desc">
+                Click start date, then end date. Promise resolves with
+                <code>{ start, end }</code>.
+              </p>
+              <div class="card-actions">
+                <button
+                  class="pri"
+                  onclick="
+                    Fnon.DatePicker({ dateRange: true, title: 'Select Range' })
+                      .then((r) =>
+                        Fnon.Hint.Success(
+                          r.start.toLocaleDateString() +
+                            ' — ' +
+                            r.end.toLocaleDateString(),
+                        ),
+                      )
+                      .catch(() => Fnon.Hint.Info('Cancelled'))
+                  "
+                >
+                  Pick Range
+                </button>
+              </div>
+            </div>
+            <div class="code">
+              <span class="kw">Fnon</span>.<span class="fn">DatePicker</span>({
+              <span class="str">dateRange</span>:
+              <span class="num">true</span> }) .<span class="fn">then</span
+              >(<span class="pr">r</span> <span class="kw">=&gt;</span>
+              <span class="fn">console</span>.<span class="fn">log</span>(<span
+                class="pr"
+                >r</span
+              >.<span class="pr">start</span>, <span class="pr">r</span>.<span
+                class="pr"
+                >end</span
+              >))
+            </div>
+          </div>
+
+          <div class="demo-card">
+            <div class="card-body">
+              <h3>Constrained</h3>
+              <p class="desc">
+                Only dates within a range are selectable (<code>minDate</code> /
+                <code>maxDate</code>).
+              </p>
+              <div class="card-actions">
+                <button
+                  onclick="
+                    var n = new Date();
+                    Fnon.DatePicker({
+                      initDate: n,
+                      minDate: new Date(n.getFullYear(), n.getMonth(), 1),
+                      maxDate: new Date(n.getFullYear(), n.getMonth() + 1, 0),
+                      title: 'This month only',
+                    })
+                      .then((d) => Fnon.Hint.Success(d.toLocaleDateString()))
+                      .catch(() => Fnon.Hint.Info('Cancelled'));
+                  "
+                >
+                  This Month Only
+                </button>
+              </div>
+            </div>
+            <div class="code">
+              <span class="kw">Fnon</span>.<span class="fn">DatePicker</span>({
+              <span class="str">minDate</span>: <span class="kw">new</span>
+              <span class="fn">Date</span>(<span class="str">'2026-01-01'</span
+              >), <span class="str">maxDate</span>: <span class="kw">new</span>
+              <span class="fn">Date</span>(<span class="str">'2026-12-31'</span
+              >) })
+            </div>
+          </div>
+        </div>
+
+        <div class="ref-section">
+          <h3>DatePickerOptions</h3>
+          <pre>
+{
+  <span style="color:#63b3ed">initDate</span>: <span style="color:#9ae6b4">Date</span>          <span style="color:#6b7280">// Initial month to show (default: today)</span>
+  <span style="color:#63b3ed">dateRange</span>: <span style="color:#9ae6b4">boolean</span>       <span style="color:#6b7280">// Enable range mode (default: false)</span>
+  <span style="color:#63b3ed">withTime</span>: <span style="color:#9ae6b4">boolean</span>        <span style="color:#6b7280">// Show time picker after date selection (default: false)</span>
+  <span style="color:#63b3ed">minDate</span>: <span style="color:#9ae6b4">Date</span>           <span style="color:#6b7280">// Earliest selectable date</span>
+  <span style="color:#63b3ed">maxDate</span>: <span style="color:#9ae6b4">Date</span>           <span style="color:#6b7280">// Latest selectable date</span>
+  <span style="color:#63b3ed">title</span>: <span style="color:#9ae6b4">string</span>           <span style="color:#6b7280">// Modal title</span>
+  <span style="color:#63b3ed">isDark</span>: <span style="color:#9ae6b4">boolean|()=&gt;boolean</span>  <span style="color:#6b7280">// Enable dark mode for this instance</span>
+}
+      </pre>
+        </div>
+
+        <p style="font-size: 0.82rem; color: #718096; margin: 0.5rem 0">
+          <strong>Async:</strong> Always async &mdash; returns
+          <code>Promise&lt;Date | { start: Date; end: Date }&gt;</code>. Rejects
+          when the modal is closed without selecting. Also available as
+          <code>Fnon.DP(opts)</code>.
+        </p>
+
+        <div class="sandbox">
+          <h3>Sandbox &mdash; DatePicker</h3>
+          <p>Configure and run a DatePicker instance.</p>
+          <div class="sandbox-grid">
+            <div class="sandbox-row">
+              <label for="dp-title">Title</label>
+              <input type="text" id="dp-title" value="Select a Date" />
+            </div>
+            <div class="sandbox-row">
+              <div class="chk-row">
+                <input type="checkbox" id="dp-range" /><label for="dp-range"
+                  >Date range mode</label
+                >
+              </div>
+            </div>
+            <div class="sandbox-row">
+              <div class="chk-row">
+                <input type="checkbox" id="dp-time" /><label for="dp-time"
+                  >With time picker</label
+                >
+              </div>
+            </div>
+            <div class="sandbox-row">
+              <label for="dp-min">Min date (YYYY-MM-DD, optional)</label>
+              <input type="date" id="dp-min" />
+            </div>
+            <div class="sandbox-row">
+              <label for="dp-max">Max date (YYYY-MM-DD, optional)</label>
+              <input type="date" id="dp-max" />
+            </div>
+          </div>
+          <div class="sandbox-actions">
+            <button class="pri" onclick="runDpSandbox()">
+              Open DatePicker
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <hr />
+      <footer>
+        Fnon.js v2.0.0 &mdash; Interactive Playground &middot; MIT License
+        &middot;
+        <a
+          href="https://github.com/anomalyco/fnon"
+          target="_blank"
+          style="color: #029eff"
+          >GitHub</a
+        >
+      </footer>
+    </div>
+
+    <script src="fnon.es.js"></script>
+    <script src="fnon.min.js"></script>
+    <script>
+      // ── Helper: get value or undefined ──
+      function val(id) {
+        var e = document.getElementById(id);
+        return e ? e.value : undefined;
+      }
+      function num(id) {
+        var v = parseFloat(val(id));
+        return isNaN(v) ? undefined : v;
+      }
+      function chk(id) {
+        var e = document.getElementById(id);
+        return e ? e.checked : false;
+      }
+      function themeFn(theme) {
+        return Fnon.Hint[theme] || Fnon.Hint.Primary;
+      }
+
+      // ── Hint sandbox ──
+      function runHintSandbox() {
+        var theme = val("hint-theme") || "Primary";
+        var msg = val("hint-msg") || "Hello!";
+        var opts = {};
+        var title = val("hint-title");
+        if (title) opts.title = title;
+        var pos = val("hint-position");
+        if (pos) opts.position = pos;
+        var to = num("hint-timeout");
+        if (to !== undefined) opts.timeOut = to;
+        opts.closable = chk("hint-closable");
+        var w = val("hint-width");
+        if (w) opts.width = w;
+        var fs = val("hint-fontsize");
+        if (fs) opts.fontSize = fs;
+        var pc = val("hint-progresscolor");
+        if (pc) opts.progressColor = pc;
+        Fnon.Hint[theme](msg, opts);
+      }
+
+      // ── Wait sandbox ──
+      function runWaitSandbox() {
+        var type = val("wait-type") || "Orbit";
+        var text = val("wait-text") || "";
+        var opts = {};
+        var sc = val("wait-svgcolor");
+        if (sc) opts.svgColor = sc;
+        var cs = val("wait-containersize");
+        if (cs) opts.containerSize = cs;
+        var ff = val("wait-fontfamily");
+        if (ff) opts.fontFamily = ff;
+        opts.clickToClose = chk("wait-clicktoclose");
+        Fnon.Wait[type](text, opts);
+      }
+
+      // ── Box sandbox ──
+      function runBoxSandbox() {
+        var type = val("box-type") || "Orbit";
+        var sel = val("box-selector") || "#box-target";
+        var text = val("box-text") || "";
+        var opts = {};
+        var sc = val("box-svgcolor");
+        if (sc) opts.svgColor = sc;
+        var sw = num("box-svgw");
+        var sh = num("box-svgh");
+        if (sw !== undefined || sh !== undefined)
+          opts.svgSize = { w: sw || 40, h: sh || 40 };
+        Fnon.Box[type](sel, text, Object.keys(opts).length ? opts : undefined);
+      }
+
+      // ── Alert sandbox ──
+      function runAlertSandbox() {
+        var theme = val("alert-theme") || "Primary";
+        var msg = val("alert-msg") || "Hello!";
+        var opts = { message: msg };
+        var title = val("alert-title");
+        if (title) opts.title = title;
+        var btn = val("alert-btnok");
+        if (btn) opts.btnOkText = btn;
+        var w = val("alert-width");
+        if (w) opts.width = w;
+        var ff = val("alert-fontfamily");
+        if (ff) opts.fontFamily = ff;
+        opts.closeButton = chk("alert-showclose");
+        opts.autoFocus = chk("alert-autofocus");
+        Fnon.Alert[theme](opts);
+      }
+
+      // ── Ask sandbox ──
+      function runAskSandbox() {
+        var theme = val("ask-theme") || "Primary";
+        var msg = val("ask-msg") || "Proceed?";
+        var opts = { message: msg };
+        var title = val("ask-title");
+        if (title) opts.title = title;
+        var ok = val("ask-btnok");
+        if (ok) opts.btnOkText = ok;
+        var cancel = val("ask-btncancel");
+        if (cancel) opts.btnCancelText = cancel;
+        var w = val("ask-width");
+        if (w) opts.width = w;
+        opts.closeButton = chk("ask-showclose");
+        Fnon.Ask[theme](opts);
+      }
+
+      // ── Dialogue sandbox ──
+      function runDialogueSandbox() {
+        var msg = val("dlg-msg") || "Dialogue message";
+        var opts = { message: msg };
+        var title = val("dlg-title");
+        if (title) opts.title = title;
+        var w = val("dlg-width");
+        if (w) opts.width = w;
+        var lay = val("dlg-layout");
+        if (lay) opts.layout = lay;
+        var ff = val("dlg-fontfamily");
+        if (ff) opts.fontFamily = ff;
+        opts.closeButton = chk("dlg-showclose");
+        opts.showMin = chk("dlg-showmin");
+        opts.showMaxMin = chk("dlg-showmaxmin");
+        opts.autoFocus = chk("dlg-autofocus");
+        opts.buttons = [
+          {
+            text: "OK",
+            style: val("dlg-theme") || "Primary",
+            callback: function (c) {
+              c();
+            },
+          },
+        ];
+        Fnon.Dialogue(opts);
+      }
+
+      // ── Breaking sandbox ──
+      function runBreakingSandbox() {
+        var headline = val("breaking-headline") || "BREAKING";
+        var msg = val("breaking-msg") || "Notification!";
+        var opts = { headline: headline, message: msg };
+        var th = val("breaking-theme");
+        if (th) opts.theme = th;
+        var anc = val("breaking-anchor");
+        if (anc) opts.anchor = anc;
+        var to = num("breaking-timeout");
+        if (to !== undefined) opts.timeout = to;
+        opts.closable = chk("breaking-closable");
+        Fnon.Breaking(opts);
+      }
+
+      // ── DatePicker sandbox ──
+      function runDpSandbox() {
+        var title = val("dp-title") || "Select a Date";
+        var opts = { title: title };
+        if (chk("dp-range")) opts.dateRange = true;
+        if (chk("dp-time")) opts.withTime = true;
+        var min = val("dp-min");
+        if (min) opts.minDate = new Date(min + "T00:00:00");
+        var max = val("dp-max");
+        if (max) opts.maxDate = new Date(max + "T00:00:00");
+        var isDark = document.documentElement.dataset.theme === "dark";
+        if (isDark) {
+          opts.isDark = true;
+          opts.darkBgColor = "#1e293b";
+        }
+        Fnon.DatePicker(opts)
+          .then(function (r) {
+            if (r && r.start) {
+              Fnon.Hint.Success(
+                r.start.toLocaleDateString() +
+                  " — " +
+                  r.end.toLocaleDateString(),
+              );
+            } else {
+              Fnon.Hint.Success(r.toLocaleDateString());
+            }
+          })
+          .catch(function () {
+            Fnon.Hint.Info("Cancelled");
+          });
+      }
+
+      // ── Dark/light theme toggle ──
+      function getPreferredTheme() {
+        const saved = localStorage.getItem("fnon-demo-theme");
+        if (saved) return saved;
+        return window.matchMedia("(prefers-color-scheme: dark)").matches
+          ? "dark"
+          : "light";
+      }
+      function syncFnonTheme(isDark) {
+        if (typeof Fnon !== "undefined") {
+          Fnon.Init({ isDark, darkBgColor: "#1e293b" });
+        }
+      }
+      function applyTheme(theme) {
+        document.documentElement.dataset.theme = theme;
+        document.getElementById("theme-toggle").textContent =
+          theme === "dark" ? "☀️" : "🌙";
+        localStorage.setItem("fnon-demo-theme", theme);
+        syncFnonTheme(theme === "dark");
+      }
+      function toggleTheme() {
+        const next =
+          document.documentElement.dataset.theme === "dark" ? "light" : "dark";
+        applyTheme(next);
+      }
+      applyTheme(getPreferredTheme());
+    </script>
+  </body>
+</html>
