@@ -1,0 +1,27 @@
+{
+    "name": "fnon2",
+    "version": "2.0.0",
+    "description": "Lightweight modal, toast, spinner, date picker, and context menu library. No dependencies. 42 KB minified (12 KB gzip). Works in all modern browsers.",
+    "main": "fnon.min.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "(https://github.com/superawdi/Fnon2)"
+    },
+    "keywords": [
+        "Fnon",
+        "Hint",
+        "Ask",
+        "Confrim",
+        "Dialouge",
+        "Loading",
+        "Context Menu",
+        "Date Picker",
+        "Toast",
+        "Modal"
+    ],
+    "author": "Adel Alawdy",
+    "license": "MIT"
+}
