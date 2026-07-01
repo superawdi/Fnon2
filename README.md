@@ -103,7 +103,7 @@ Copy `fnon.min.js` and `fnon.min.css` to your project.
     ]}
   ]);
 
-  // Set global defaults..
+  // Set global defaults
   Fnon.Init({ isDark: true, fontFamily: 'Arial, sans-serif' });
 </script>
 ```
