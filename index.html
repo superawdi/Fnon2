@@ -652,7 +652,7 @@
           </button>
         </h1>
         <p class="sub">
-          Seven feature sections. Each has code examples (try instantly), an
+          Eleven feature sections. Each has code examples (try instantly), an
           Init() config reference table, an Async explanation, and a live
           sandbox form. Open browser console for lifecycle logs.
         </p>
@@ -666,6 +666,8 @@
         <a href="#breaking">7 Breaking</a>
         <a href="#datepicker">8 DatePicker</a>
         <a href="#contextmenu">9 ContextMenu</a>
+        <a href="#addtheme">10 AddTheme</a>
+        <a href="#addlogo">11 AddLogo</a>
       </div>
       </div>
 
@@ -3613,6 +3615,173 @@
           Escape to close, ArrowRight to open submenu, ArrowLeft to close submenu.
           <strong>Alias:</strong> <code>Fnon.CM(event, items, globalOnClick?)</code>
         </p>
+      </section>
+
+      <!-- ══════════════════════════ AddTheme ══════════════════════════ -->
+      <section id="addtheme">
+        <h2>
+          10. AddTheme
+          <span class="badge">Fnon.AddTheme(name, config)</span>
+        </h2>
+        <p class="section-desc">
+          Register a custom theme that applies to all modal types and hints.
+        </p>
+
+        <div class="demo-grid">
+          <div class="demo-card">
+            <div class="card-body">
+              <h3>Custom "Coral" theme</h3>
+              <p class="desc">
+                Registers a coral-themed palette for Alert, Ask, Dialogue,
+                Breaking, and Hint.
+              </p>
+              <div class="card-actions">
+                <button
+                  class="pri"
+                  onclick='Fnon.AddTheme("Coral", { titleBackground: "#ff6b6b", titleColor: "#fff", btnOkBackground: "#ff6b6b", btnOkColor: "#fff", btnOkBorderColor: "#ff6b6b", backgroundColor: "#fff5f5" }); Fnon.Hint.Success("Theme *Coral* added!");'
+                >
+                  Add Coral Theme
+                </button>
+                <button
+                  class="suc"
+                  onclick='Fnon.Alert.Coral("This uses the Coral theme!", "Coral Alert")'
+                >
+                  Alert.Coral
+                </button>
+                <button
+                  class="suc"
+                  onclick='Fnon.Hint.Coral("Coral hint!")'
+                >
+                  Hint.Coral
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="demo-card">
+            <div class="card-body">
+              <h3>Custom "Purple" theme</h3>
+              <p class="desc">
+                Registers a purple-themed palette.
+              </p>
+              <div class="card-actions">
+                <button
+                  class="pri"
+                  onclick='Fnon.AddTheme("Purple", { titleBackground: "#7c3aed", titleColor: "#fff", btnOkBackground: "#7c3aed", btnOkColor: "#fff", btnOkBorderColor: "#7c3aed", backgroundColor: "#faf5ff" }); Fnon.Hint.Success("Theme *Purple* added!");'
+                >
+                  Add Purple Theme
+                </button>
+                <button
+                  class="suc"
+                  onclick='Fnon.Ask.Purple("Uses the Purple theme?", "Purple Ask", "Yes", "No", function(r){ Fnon.Hint.Info(r ? "Yes" : "No"); })'
+                >
+                  Ask.Purple
+                </button>
+                <button
+                  class="suc"
+                  onclick='Fnon.Dialogue.Purple("Custom Purple Dialogue", "Purple")'
+                >
+                  Dialogue.Purple
+                </button>
+              </div>
+            </div>
+            <div class="code">
+              <span class="kw">Fnon</span>.<span class="fn">AddTheme</span>(<span class="str">"Purple"</span>, {<br />
+              &nbsp;&nbsp;<span class="str">titleBackground</span>: <span class="str">"#7c3aed"</span>,<br />
+              &nbsp;&nbsp;<span class="str">titleColor</span>: <span class="str">"#fff"</span>,<br />
+              &nbsp;&nbsp;<span class="str">btnOkBackground</span>: <span class="str">"#7c3aed"</span>,<br />
+              &nbsp;&nbsp;<span class="str">btnOkColor</span>: <span class="str">"#fff"</span>,<br />
+              &nbsp;&nbsp;<span class="str">btnOkBorderColor</span>: <span class="str">"#7c3aed"</span>,<br />
+              &nbsp;&nbsp;<span class="str">backgroundColor</span>: <span class="str">"#faf5ff"</span>,<br />
+              });<br />
+              <span class="kw">Fnon</span>.<span class="fn">Ask.Purple</span>(<span class="str">"Question?"</span>);
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ══════════════════════════ AddLogo ══════════════════════════ -->
+      <section id="addlogo">
+        <h2>
+          11. AddLogo
+          <span class="badge">Fnon.AddLogo(name, html)</span>
+        </h2>
+        <p class="section-desc">
+          Register a custom SVG spinner by name. Creates both <code>Wait.name()</code>
+          and <code>Box.name()</code> variants.
+        </p>
+
+        <div class="demo-grid">
+          <div class="demo-card">
+            <div class="card-body">
+              <h3>Custom "Heart" spinner</h3>
+              <p class="desc">
+                Registers a pulsing heart SVG as a custom spinner. Try
+                Wait.Heart() or Box.Heart().
+              </p>
+              <div class="card-actions">
+                <button
+                  class="pri"
+                  onclick='Fnon.AddLogo("Heart", '<svg viewBox="0 0 32 32" width="48" height="48" fill="#ff6b6b"><path d="M16 28c0 0-12-7.5-12-15.5S8 4 16 9c8-5 12 4.5 12 12.5S16 28 16 28z"><animate attributeName="transform" type="scale" values="1;1.15;1" dur="0.6s" repeatCount="indefinite"/></path></svg>'); Fnon.Hint.Success("Logo *Heart* added!");'
+                >
+                  Add Heart Logo
+                </button>
+                <button
+                  onclick="Fnon.Wait.Heart()"
+                >
+                  Wait.Heart()
+                </button>
+                <button
+                  onclick="Fnon.Wait.Remove()"
+                >
+                  Close Wait
+                </button>
+                <button
+                  onclick="Fnon.Box.Heart('#box-target')"
+                >
+                  Box.Heart('#box-target')
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="demo-card">
+            <div class="card-body">
+              <h3>Custom "Star" spinner</h3>
+              <p class="desc">
+                Registers a spinning star SVG.
+              </p>
+              <div class="card-actions">
+                <button
+                  class="pri"
+                  onclick='Fnon.AddLogo("Star", '<svg viewBox="0 0 32 32" width="48" height="48" fill="#fbbf24"><path d="M16 2l4.5 9.1 10 1.5-7.2 7 1.7 10L16 24.5 7 29.6l1.7-10-7.2-7 10-1.5L16 2z"><animateTransform attributeName="transform" type="rotate" from="0 16 16" to="360 16 16" dur="1.5s" repeatCount="indefinite"/></path></svg>'); Fnon.Hint.Success("Logo *Star* added!");'
+                >
+                  Add Star Logo
+                </button>
+                <button
+                  onclick="Fnon.Wait.Star()"
+                >
+                  Wait.Star()
+                </button>
+                <button
+                  onclick="Fnon.Wait.Remove()"
+                >
+                  Close Wait
+                </button>
+                <button
+                  onclick="Fnon.Box.Star('#box-target')"
+                >
+                  Box.Star('#box-target')
+                </button>
+              </div>
+            </div>
+            <div class="code">
+              <span class="kw">Fnon</span>.<span class="fn">AddLogo</span>(<span class="str">"Star"</span>, <span class="str">'&lt;svg&gt;...&lt;/svg&gt;'</span>);<br />
+              <span class="kw">Fnon</span>.<span class="fn">Wait.Star</span>();<br />
+              <span class="kw">Fnon</span>.<span class="fn">Box.Star</span>(<span class="str">"#my-element"</span>);
+            </div>
+          </div>
+        </div>
       </section>
 
       <hr />
