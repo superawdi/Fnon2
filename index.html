@@ -629,7 +629,7 @@
     <div class="container">
       <div class="header">
         <h1>
-          Fnon.js v2.0.3
+          Fnon.js v2.0.4
           <small
             >Interactive Playground &mdash; all APIs, live sandbox, Init
             reference</small
@@ -652,7 +652,7 @@
           </button>
         </h1>
         <p class="sub">
-          Eleven feature sections. Each has code examples (try instantly), an
+          Twelve feature sections. Each has code examples (try instantly), an
           Init() config reference table, an Async explanation, and a live
           sandbox form. Open browser console for lifecycle logs.
         </p>
@@ -668,6 +668,7 @@
         <a href="#contextmenu">9 ContextMenu</a>
         <a href="#addtheme">10 AddTheme</a>
         <a href="#addlogo">11 AddLogo</a>
+        <a href="#overlay-false">12 No‑Backdrop Dialog</a>
       </div>
       </div>
 
@@ -2638,7 +2639,7 @@
                   onclick="
                     Fnon.Dialogue({
                       message: 'Click _ to minimize, ⛶ to maximize',
-                      title: 'Min/Max',
+                      title: 'Min/Max '+new Date().getTime(),
                       showMin: true,
                       showMaxMin: true,
                       buttons: [
@@ -3714,6 +3715,53 @@
               <span class="kw">Fnon</span>.<span class="fn">AddLogo</span>(<span class="str">"Star"</span>, <span class="str">'&lt;svg&gt;...&lt;/svg&gt;'</span>);<br />
               <span class="kw">Fnon</span>.<span class="fn">Wait.Star</span>();<br />
               <span class="kw">Fnon</span>.<span class="fn">Box.Star</span>(<span class="str">"#my-element"</span>);
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ══════════════════════════ Overlay: false ══════════════════════════ -->
+      <section id="overlay-false">
+        <div class="section-body">
+          <h2>
+            <a href="#overlay-false">#</a>
+            12. No‑Backdrop Dialog
+            <span class="badge">overlay: false</span>
+          </h2>
+          <p>
+            Set <code>overlay: false</code> on a Dialogue to hide the dark backdrop
+            and let users interact with the page behind the modal.
+            Clicking the modal body brings it to the front.
+          </p>
+          <div class="sandbox">
+            <div class="sandbox-row">
+              <button class="fnon-btn fnon-btn-primary"
+                onclick="Fnon.Dialogue({
+                  title: 'Floating Dialog',
+                  message: 'I have no backdrop — click outside me to interact with the page.',
+                  overlay: false,
+                  showMaxMin: true
+                })">
+                Dialogue with overlay: false
+              </button>
+              <button class="fnon-btn fnon-btn-success"
+                onclick="Fnon.Dialogue.Success({
+                  title: 'Stack Test',
+                  message: 'Open multiple to see stacking. Click a dialog to bring it to top.',
+                  overlay: false,
+                  showMaxMin: true,
+                  width: 'sm'
+                })">
+                Stackable (open 2-3x)
+              </button>
+            </div>
+            <div class="code">
+              <span class="kw">Fnon</span>.<span class="fn">Dialogue</span>({<br />
+              &nbsp;&nbsp;title: <span class="str">"Floating Dialog"</span>,<br />
+              &nbsp;&nbsp;message: <span class="str">"No backdrop."</span>,<br />
+              &nbsp;&nbsp;<span class="kw">overlay</span>: <span class="bool">false</span>,<br />
+              &nbsp;&nbsp;showMaxMin: <span class="bool">true</span><br />
+              });
             </div>
           </div>
         </div>

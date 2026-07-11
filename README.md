@@ -1,4 +1,4 @@
-# Fnon.js v2.0 🚀
+# Fnon.js v2.0.4 🚀
 
 **Lightweight modal, toast, spinner, date picker, and context menu library.**  
 No dependencies. 42 KB minified (12 KB gzip). Works in all modern browsers.
