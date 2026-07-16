@@ -3458,19 +3458,102 @@
               >) })
             </div>
           </div>
+
+          <div class="demo-card">
+            <div class="card-body">
+              <h3>6-Month Layout</h3>
+              <p class="desc">
+                Shows 6 months in a 2×3 grid. Navigation shifts by 6 months.
+              </p>
+              <div class="card-actions">
+                <button class="pri" onclick="Fnon.DatePicker({ layout: 6, title: '6-Month View' }).then((d) => Fnon.Hint.Success(d.toLocaleDateString())).catch(() => Fnon.Hint.Info('Cancelled'))">
+                  6 Months
+                </button>
+                <button onclick="Fnon.DatePicker({ layout: 'auto', title: 'Auto Layout' }).then((d) => Fnon.Hint.Success(d.toLocaleDateString())).catch(() => Fnon.Hint.Info('Cancelled'))">
+                  Auto
+                </button>
+              </div>
+            </div>
+            <div class="code">
+              <span class="kw">Fnon</span>.<span class="fn">DatePicker</span>({ <span class="str">layout</span>: <span class="num">6</span> })<br />
+              <span class="kw">Fnon</span>.<span class="fn">DatePicker</span>({ <span class="str">layout</span>: <span class="str">'auto'</span> })
+            </div>
+          </div>
+
+          <div class="demo-card">
+            <div class="card-body">
+              <h3>Localized (Korean)</h3>
+              <p class="desc">
+                Custom day/month names, digits, and UI text via <code>language</code>.
+              </p>
+              <div class="card-actions">
+                <button class="pri" onclick="
+                  Fnon.DatePicker({
+                    title: '날짜 선택',
+                    language: {
+                      days: ['일','월','화','수','목','금','토'],
+                      months: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+                      today: '오늘',
+                      ok: '확인',
+                      prevMonth: '이전 달',
+                      nextMonth: '다음 달',
+                      digits: ['0','1','2','3','4','5','6','7','8','9'],
+                    },
+                  })
+                    .then((d) => Fnon.Hint.Success(d.toLocaleDateString()))
+                    .catch(() => Fnon.Hint.Info('취소됨'))
+                ">
+                  Korean
+                </button>
+                <button onclick="
+                  Fnon.DatePicker.setLocale({
+                    days: ['일','월','화','수','목','금','토'],
+                    months: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+                    today: '오늘',
+                    ok: '확인',
+                  });
+                  Fnon.DatePicker({ title: 'Globally localized' })
+                    .then((d) => Fnon.Hint.Success(d.toLocaleDateString()))
+                    .catch(() => Fnon.Hint.Info('취소됨'))
+                ">
+                  Global setLocale
+                </button>
+              </div>
+            </div>
+            <div class="code">
+              <span class="kw">Fnon</span>.<span class="fn">DatePicker</span>({ <span class="str">language</span>: { <span class="str">days</span>: [<span class="str">'일'</span>,<span class="str">'월'</span>,...] } })<br />
+              <span class="kw">Fnon</span>.<span class="fn">DatePicker</span>.<span class="fn">setLocale</span>({ <span class="str">days</span>: [...] })
+            </div>
+          </div>
         </div>
 
         <div class="ref-section">
           <h3>DatePickerOptions</h3>
           <pre>
 {
-  <span style="color:#63b3ed">initDate</span>: <span style="color:#9ae6b4">Date</span>          <span style="color:#6b7280">// Initial month to show (default: today)</span>
-  <span style="color:#63b3ed">dateRange</span>: <span style="color:#9ae6b4">boolean</span>       <span style="color:#6b7280">// Enable range mode (default: false)</span>
-  <span style="color:#63b3ed">withTime</span>: <span style="color:#9ae6b4">boolean</span>        <span style="color:#6b7280">// Show time picker after date selection (default: false)</span>
-  <span style="color:#63b3ed">minDate</span>: <span style="color:#9ae6b4">Date</span>           <span style="color:#6b7280">// Earliest selectable date</span>
-  <span style="color:#63b3ed">maxDate</span>: <span style="color:#9ae6b4">Date</span>           <span style="color:#6b7280">// Latest selectable date</span>
-  <span style="color:#63b3ed">title</span>: <span style="color:#9ae6b4">string</span>           <span style="color:#6b7280">// Modal title</span>
-  <span style="color:#63b3ed">isDark</span>: <span style="color:#9ae6b4">boolean|()=&gt;boolean</span>  <span style="color:#6b7280">// Enable dark mode for this instance</span>
+  <span style="color:#63b3ed">initDate</span>: <span style="color:#9ae6b4">Date</span>                     <span style="color:#6b7280">// Initial month to show (default: today)</span>
+  <span style="color:#63b3ed">dateRange</span>: <span style="color:#9ae6b4">boolean</span>                  <span style="color:#6b7280">// Enable range mode (default: false)</span>
+  <span style="color:#63b3ed">withTime</span>: <span style="color:#9ae6b4">boolean</span>                   <span style="color:#6b7280">// Show time picker (default: false)</span>
+  <span style="color:#63b3ed">minDate</span>: <span style="color:#9ae6b4">Date</span>                      <span style="color:#6b7280">// Earliest selectable date</span>
+  <span style="color:#63b3ed">maxDate</span>: <span style="color:#9ae6b4">Date</span>                      <span style="color:#6b7280">// Latest selectable date</span>
+  <span style="color:#63b3ed">title</span>: <span style="color:#9ae6b4">string</span>                      <span style="color:#6b7280">// Modal title</span>
+  <span style="color:#63b3ed">isDark</span>: <span style="color:#9ae6b4">boolean|()=&gt;boolean</span>         <span style="color:#6b7280">// Enable dark mode</span>
+  <span style="color:#63b3ed">dir</span>: <span style="color:#9ae6b4">'ltr'|'rtl'</span>                  <span style="color:#6b7280">// Text direction</span>
+  <span style="color:#63b3ed">layout</span>: <span style="color:#9ae6b4">1|6|'auto'</span>                <span style="color:#6b7280">// Calendar layout (default: 1)</span>
+  <span style="color:#63b3ed">language</span>: <span style="color:#9ae6b4">DatePickerLocale</span>          <span style="color:#6b7280">// Localization object (see below)</span>
+}
+  <span style="color:#6b7280">// DatePickerLocale full shape:</span>
+{
+  <span style="color:#63b3ed">days</span>:        <span style="color:#9ae6b4">[string,string,...]</span>   <span style="color:#6b7280">// 7 short day names  (default: ['Sun','Mon',...])</span>
+  <span style="color:#63b3ed">daysLong</span>:    <span style="color:#9ae6b4">[string,string,...]</span>   <span style="color:#6b7280">// 7 long day names   (default: ['Sunday','Monday',...])</span>
+  <span style="color:#63b3ed">months</span>:      <span style="color:#9ae6b4">[string,string,...]</span>   <span style="color:#6b7280">// 12 month names     (default: ['January','February',...])</span>
+  <span style="color:#63b3ed">monthsShort</span>: <span style="color:#9ae6b4">[string,string,...]</span>   <span style="color:#6b7280">// 12 short month names (default: ['Jan','Feb',...])</span>
+  <span style="color:#63b3ed">today</span>:       <span style="color:#9ae6b4">string</span>               <span style="color:#6b7280">// Today button text  (default: 'Today')</span>
+  <span style="color:#63b3ed">ok</span>:          <span style="color:#9ae6b4">string</span>               <span style="color:#6b7280">// OK button text     (default: 'OK')</span>
+  <span style="color:#63b3ed">prevMonth</span>:   <span style="color:#9ae6b4">string</span>               <span style="color:#6b7280">// Prev month tooltip (default: 'Previous month')</span>
+  <span style="color:#63b3ed">nextMonth</span>:   <span style="color:#9ae6b4">string</span>               <span style="color:#6b7280">// Next month tooltip (default: 'Next month')</span>
+  <span style="color:#63b3ed">digits</span>:      <span style="color:#9ae6b4">[string,string,...]</span>   <span style="color:#6b7280">// 10 numeral digits  (default: ['0','1',...,'9'])</span>
+  <span style="color:#63b3ed">rangeLabel</span>:  <span style="color:#9ae6b4">string</span>               <span style="color:#6b7280">// 6-month range label template (default: '{fromMonth} – {toMonth} {year}')</span>
 }
       </pre>
         </div>
@@ -3503,6 +3586,22 @@
                   >With time picker</label
                 >
               </div>
+            </div>
+            <div class="sandbox-row">
+              <label for="dp-layout">Layout</label>
+              <select id="dp-layout">
+                <option value="1">1 (single month)</option>
+                <option value="6">6 (2×3 grid)</option>
+                <option value="auto">auto (responsive)</option>
+              </select>
+            </div>
+            <div class="sandbox-row">
+              <label for="dp-lang">Language preset</label>
+              <select id="dp-lang">
+                <option value="">Default (English)</option>
+                <option value="ko">한국어 (Korean)</option>
+                <option value="ar">العربية (Arabic, RTL)</option>
+              </select>
             </div>
             <div class="sandbox-row">
               <label for="dp-min">Min date (YYYY-MM-DD, optional)</label>
@@ -3935,6 +4034,33 @@
         var opts = { title: title };
         if (chk("dp-range")) opts.dateRange = true;
         if (chk("dp-time")) opts.withTime = true;
+        var layout = val("dp-layout");
+        if (layout) opts.layout = layout === "auto" ? "auto" : Number(layout);
+        var lang = val("dp-lang");
+        if (lang === "ko") {
+          opts.language = {
+            days: ['일','월','화','수','목','금','토'],
+            months: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+            today: '오늘',
+            ok: '확인',
+            prevMonth: '이전 달',
+            nextMonth: '다음 달',
+            digits: ['0','1','2','3','4','5','6','7','8','9'],
+            rangeLabel: '{fromMonth} – {toMonth} {year}',
+          };
+        } else if (lang === "ar") {
+          opts.language = {
+            days: ['أحد','إثنين','ثلاثاء','أربعاء','خميس','جمعة','سبت'],
+            months: ['يناير','فبراير','مارس','أبريل','مايو','يونيو','يوليو','أغسطس','سبتمبر','أكتوبر','نوفمبر','ديسمبر'],
+            today: 'اليوم',
+            ok: 'موافق',
+            prevMonth: 'الشهر السابق',
+            nextMonth: 'الشهر التالي',
+            digits: ['٠','١','٢','٣','٤','٥','٦','٧','٨','٩'],
+            rangeLabel: '{fromMonth} – {toMonth} {year}',
+          };
+          opts.dir = 'rtl';
+        }
         var min = val("dp-min");
         if (min) opts.minDate = new Date(min + "T00:00:00");
         var max = val("dp-max");

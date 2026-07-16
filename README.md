@@ -1,4 +1,4 @@
-# Fnon.js v2.0.4 🚀
+# Fnon.js v2.0.5 🚀
 
 **Lightweight modal, toast, spinner, date picker, and context menu library.**  
 No dependencies. 42 KB minified (12 KB gzip). Works in all modern browsers.
@@ -16,8 +16,10 @@ No dependencies. 42 KB minified (12 KB gzip). Works in all modern browsers.
 
 ---
 
+> ### [Github](https://github.com/superawdi/Fnon2)
+---
 > ### [Live Demo](https://superawdi.github.io/Fnon2/)
-
+---
 ## Table of Contents
 
 - [Installation](#installation)
@@ -126,6 +128,7 @@ The `Fnon` object is the single entry point. It exposes:
 | `Wait` | object | Full-page spinner methods |
 | `Box` | object | Container-targeted spinner methods |
 | `DatePicker(options?)` | function | Date picker modal (alias: `DP`) |
+| `DatePicker.setLocale(locale)` | function | Set global date picker locale (language) |
 | `ContextMenu(event, items, onClick?)` | function | Context menu (alias: `CM`) |
 | `AddLogo(name, html)` | function | Register custom spinner |
 | `AddTheme(name, config)` | function | Register custom theme |
@@ -646,7 +649,9 @@ Fnon.Box.MyLogo('#target', 'Custom');
 
 ## DatePicker
 
-A calendar modal that returns a Promise with the selected date(s).
+A calendar modal that returns a Promise with the selected date(s).  
+Supports **1-month**, **6-month**, and **auto-responsive** layout.  
+Fully localizable with built-in English, Korean, and custom locale support.
 
 ```ts
 Fnon.DatePicker(options?: DatePickerOptions): Promise<Date | { start: Date; end: Date } | null>
@@ -668,6 +673,18 @@ if (range) console.log('From:', range.start, 'To:', range.end);
 // With time picker
 const dt = await Fnon.DatePicker({ withTime: true });
 
+// 6-month layout
+const range = await Fnon.DatePicker({ layout: 6, dateRange: true });
+
+// With custom language
+const arLocale = {
+  days: ['ح', 'ن', 'ث', 'ر', 'خ', 'ج', 'س'],
+  months: ['يناير','فبراير','مارس','أبريل','مايو','يونيو','يوليو','أغسطس','سبتمبر','أكتوبر','نوفمبر','ديسمبر'],
+  today: 'اليوم', ok: 'موافق', prevMonth: 'الشهر السابق', nextMonth: 'الشهر التالي',
+  digits: '٠١٢٣٤٥٦٧٨٩'
+};
+const d = await Fnon.DatePicker({ language: arLocale, dir: 'rtl' });
+
 // With constraints
 const d = await Fnon.DatePicker({
   minDate: new Date(2024, 0, 1),
@@ -686,10 +703,65 @@ The Promise resolves `null` if the user closes the modal without selecting (X bu
 | `withTime` | `boolean` | `false` | Show time input (ignored if `dateRange` is `true`) |
 | `minDate` | `Date` | — | Earliest selectable date |
 | `maxDate` | `Date` | — | Latest selectable date |
+| `layout` | `1 \| 6 \| 'auto'` | `1` | Number of month columns: `1` (single), `6` (6-month grid), `'auto'` (responsive — 1 on mobile, 6 on 768px+) |
+| `language` | `DatePickerLocale` | — | Per-instance locale override (see [DatePickerLocale](#datepickerlocale) below) |
 | `title` | `FnonContent` | — | Modal title |
 | `isDark` | `boolean \| (() => boolean)` | — | Dark mode |
 | `darkBgColor` | `string` | — | Dark background |
 | `dir` | `'ltr' \| 'rtl'` | `'ltr'` | Text direction |
+
+### DatePickerLocale
+
+Override display text and digit characters for any language. Pass via `language` option or set globally with `Fnon.DatePicker.setLocale()`.
+
+```ts
+interface DatePickerLocale {
+  days?: string[];        // 7 short day names (default: ['Su','Mo','Tu','We','Th','Fr','Sa'])
+  daysLong?: string[];    // 7 long day names for tooltips
+  months?: string[];      // 12 month names (default: English)
+  monthsShort?: string[]; // 12 short month names
+  today?: string;         // "Today" button text (default: 'Today')
+  ok?: string;            // OK button text (default: 'OK')
+  prevMonth?: string;     // Tooltip for prev button (default: 'Previous month')
+  nextMonth?: string;     // Tooltip for next button (default: 'Next month')
+  rangeLabel?: string;    // Template for multi-month header — use {fromMonth}, {toMonth}, {year} placeholders
+  digits?: string;        // 10 characters for numeral replacement — index 0 = '0', index 9 = '9'
+}
+```
+
+**`digits` example** — Arabic-Indic numerals:
+
+```ts
+digits: '٠١٢٣٤٥٦٧٨٩'
+// 2025 → ٢٠٢٥
+```
+
+**`rangeLabel` example** — custom header format:
+
+```ts
+rangeLabel: '{fromMonth} – {toMonth} {year}'
+// "January – June 2025"
+```
+
+**Global locale via `Fnon.DatePicker.setLocale()`:**
+
+```ts
+Fnon.DatePicker.setLocale({
+  months: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+  days: ['일','월','화','수','목','금','토']
+});
+```
+
+**Global locale via `Fnon.Init()`:**
+
+```ts
+Fnon.Init({
+  datePickerLocale: {
+    months: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+    days: ['일','월','화','수','목','금','토']
+  }
+});
+```
 
 ### Return Value
 
@@ -1040,6 +1112,10 @@ Set these on `:root` to customize globally:
 |-------|---------|
 | `.fnon-dp` | DatePicker container |
 | `.fnon-dp-dark` | Dark mode |
+| `.fnon-dp-layout-auto` | Responsive layout mode (media query) |
+| `.fnon-dp-months` | Multi-month grid container (3 columns) |
+| `.fnon-dp-month` | Individual month card in multi-layout |
+| `.fnon-dp-month-name` | Month card title |
 | `.fnon-dp-header` | Header row |
 | `.fnon-dp-nav` | Nav button |
 | `.fnon-dp-nav-disabled` | Disabled nav |
@@ -1057,9 +1133,9 @@ Set these on `:root` to customize globally:
 | `.fnon-dp-range-start` | Range start |
 | `.fnon-dp-range-end` | Range end |
 | `.fnon-dp-range-preview` | Hover preview |
-| `.fnon-dp-actions` | Action buttons |
-| `.fnon-dp-btn` | Action button |
-| `.fnon-dp-btn-primary` | Primary action |
+| `.fnon-dp-btn-group` | Action button group |
+| `.fnon-dp-btn-ok` | OK button |
+| `.fnon-dp-btn-cancel` | Cancel button |
 | `.fnon-dp-popup` | Year/month popup |
 | `.fnon-dp-popup-nav` | Popup nav bar |
 | `.fnon-dp-popup-nav-btn` | Popup nav button |
