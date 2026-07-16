@@ -17,9 +17,13 @@ No dependencies. 42 KB minified (12 KB gzip). Works in all modern browsers.
 ---
 
 > ### [Github](https://github.com/superawdi/Fnon2)
+
 ---
+
 > ### [Live Demo](https://superawdi.github.io/Fnon2/)
+
 ---
+
 ## Table of Contents
 
 - [Installation](#installation)
